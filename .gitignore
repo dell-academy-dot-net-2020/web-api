@@ -108,6 +108,7 @@ ipch/
 *.VC.VC.opendb
 
 # Visual Studio profiler
+# Visual Studio profiler
 *.psess
 *.vsp
 *.vspx
