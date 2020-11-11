@@ -1,0 +1,11 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Dell.Adacemy.Application\Dell.Academy.Application.csproj" />
+    <ProjectReference Include="..\Dell.Adacemy.Infra.Data\Dell.Academy.Infra.Data.csproj" />
+  </ItemGroup>
+</Project>
