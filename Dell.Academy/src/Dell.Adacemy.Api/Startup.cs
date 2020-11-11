@@ -1,4 +1,3 @@
-using Dell.Academy.Api.Configurations;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
@@ -44,8 +43,6 @@ namespace Dell.Academy.Api
             {
                 endpoints.MapControllers();
             });
-
-            app.UseSwaggerSetup();
         }
     }
 }

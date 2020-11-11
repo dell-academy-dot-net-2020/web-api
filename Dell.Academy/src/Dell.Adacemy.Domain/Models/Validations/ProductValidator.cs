@@ -1,4 +1,5 @@
 ﻿using FluentValidation;
+using Microsoft.VisualBasic;
 
 namespace Dell.Academy.Domain.Models.Validations
 {
@@ -8,17 +9,11 @@ namespace Dell.Academy.Domain.Models.Validations
         {
             RuleFor(pd => pd.Name).NotEmpty().Length(3, 15);
 
-            RuleFor(pd => pd.Description).NotEmpty().Length(3, 15);
+            RuleFor(pd => pd.Description).NotEmpty().Length(3, 30);
 
-            RuleFor(pd => pd.Value).NotEmpty();
+            RuleFor(pd => pd.Value).NotEmpty().GreaterThan(0);
 
-            RuleFor(pd => pd.Register).NotEmpty();
-
-            RuleFor(pd => pd.Active).NotEmpty();
-
-            RuleFor(pd => pd.Provider).NotEmpty();
-
-            RuleFor(pd => pd.Category).NotEmpty();
+            RuleFor(pd => pd.Register).Equal(DateAndTime.Now);
         }
     }
 }
