@@ -10,7 +10,6 @@ namespace Dell.Academy.Domain.Models
         public ProviderType ProviderType { get; private set; }
         public bool Active { get; private set; }
         public Address Address { get; private set; }
-
         public List<Product> Products { get; private set; }
 
         public Provider(string name, string documentNumber, ProviderType providerType, bool active, Address address, List<Product> products)
