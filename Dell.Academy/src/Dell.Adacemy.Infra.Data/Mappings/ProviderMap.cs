@@ -4,21 +4,18 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace Dell.Academy.Infra.Data.Mappings
 {
-  
     public class ProviderMap : IEntityTypeConfiguration<Provider>
     {
         public void Configure(EntityTypeBuilder<Provider> builder)
         {
             builder.HasKey(c => c.Id);
             builder.Property(c => c.Name).IsRequired().HasMaxLength(15);
-            builder.Property(c => c.DocumentNumber).HasMaxLength(15);
-            builder.Property(c => c.ProviderType).IsRequired().HasMaxLength(15);
-            builder.Property(c => c.Active).IsRequired().HasMaxLength(15);
-            builder.Property(c => c.Address).IsRequired().HasMaxLength(15);
-            builder.Property(c => c.Products).IsRequired().HasMaxLength(15);
-            builder.ToTable("providers");
+            builder.Property(c => c.DocumentNumber).HasMaxLength(14);
+            builder.Property(c => c.ProviderType).IsRequired();
+            builder.Property(c => c.Active);
+            builder.HasOne(c => c.Address).WithOne(a => a.Provider).OnDelete(DeleteBehavior.Cascade);
+            builder.HasMany(c => c.Products).WithOne(p => p.Provider).OnDelete(DeleteBehavior.Restrict);
+            builder.ToTable("Providers");
         }
     }
 }
-
-
