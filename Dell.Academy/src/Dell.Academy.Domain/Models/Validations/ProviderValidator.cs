@@ -1,7 +1,6 @@
-﻿using FluentValidation;
-using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using Dell.Academy.Domain.Models.Enums;
+using Dell.Academy.Domain.Models.Validations.Utils;
+using FluentValidation;
 
 namespace Dell.Academy.Domain.Models.Validations
 {
@@ -11,15 +10,17 @@ namespace Dell.Academy.Domain.Models.Validations
         {
             RuleFor(p => p.Name).NotEmpty().Length(3, 15);
 
-            RuleFor(p => p.DocumentNumber).NotEmpty().Length(3, 15);
+            When(p => p.ProviderType == ProviderType.Person, () =>
+            {
+                RuleFor(p => p.DocumentNumber.Length == CpfValidation.CpfSize).Equal(true);
+                RuleFor(p => CpfValidation.Validate(p.DocumentNumber)).Equal(true);
+            });
 
-            RuleFor(p => p.ProviderType).NotEmpty();
-
-            RuleFor(p => p.Active).NotEmpty();
-
-            RuleFor(p => p.Address).NotEmpty();
-
-            RuleFor(p => p.Products).NotEmpty();
+            When(p => p.ProviderType == ProviderType.Company, () =>
+            {
+                RuleFor(p => p.DocumentNumber.Length == CnpjValidation.CnpjSize).Equal(true);
+                RuleFor(p => CnpjValidation.Validate(p.DocumentNumber)).Equal(true);
+            });
         }
     }
 }

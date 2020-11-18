@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text;
 
 namespace Dell.Academy.Domain.Models.Validations.Utils
 {
@@ -16,10 +17,7 @@ namespace Dell.Academy.Domain.Models.Validations.Utils
             return !HasRepeatDigits(cpfNumeros) && HasValidDigits(cpfNumeros);
         }
 
-        private static bool ValidSize(string valor)
-        {
-            return valor.Length == CpfSize;
-        }
+        private static bool ValidSize(string valor) => valor.Length == CpfSize;
 
         private static bool HasRepeatDigits(string valor)
         {
@@ -109,7 +107,7 @@ namespace Dell.Academy.Domain.Models.Validations.Utils
         private const int Modulo = 11;
         private readonly List<int> _multiplicadores = new List<int> { 2, 3, 4, 5, 6, 7, 8, 9 };
         private readonly IDictionary<int, string> _substituicoes = new Dictionary<int, string>();
-        private bool _complementarDoModulo = true;
+        private readonly bool _complementarDoModulo = true;
 
         public DigitoVerificador(string numero)
         {
@@ -134,15 +132,9 @@ namespace Dell.Academy.Domain.Models.Validations.Utils
             return this;
         }
 
-        public void AddDigito(string digito)
-        {
-            _numero = string.Concat(_numero, digito);
-        }
+        public void AddDigito(string digito) => _numero = string.Concat(_numero, digito);
 
-        public string CalculaDigito()
-        {
-            return !(_numero.Length > 0) ? "" : GetDigitSum();
-        }
+        public string CalculaDigito() => _numero.Length <= 0 ? "" : GetDigitSum();
 
         private string GetDigitSum()
         {
@@ -166,15 +158,16 @@ namespace Dell.Academy.Domain.Models.Validations.Utils
     {
         public static string OnlyNumbers(string valor)
         {
-            var onlyNumber = "";
+            var onlyNumber = new StringBuilder();
             foreach (var s in valor)
             {
                 if (char.IsDigit(s))
                 {
-                    onlyNumber += s;
+                    onlyNumber.Append(s);
                 }
             }
-            return onlyNumber.Trim();
+
+            return onlyNumber.ToString().Trim();
         }
     }
 }

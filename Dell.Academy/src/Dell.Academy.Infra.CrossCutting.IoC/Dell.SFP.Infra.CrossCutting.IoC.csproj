@@ -12,7 +12,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Dell.Adacemy.Application\Dell.Academy.Application.csproj" />
-    <ProjectReference Include="..\Dell.Adacemy.Infra.Data\Dell.Academy.Infra.Data.csproj" />
+    <ProjectReference Include="..\Dell.Academy.Application\Dell.Academy.Application.csproj" />
+    <ProjectReference Include="..\Dell.Academy.Infra.Data\Dell.Academy.Infra.Data.csproj" />
   </ItemGroup>
 </Project>

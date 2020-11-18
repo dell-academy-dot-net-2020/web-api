@@ -6,8 +6,8 @@ namespace Dell.Academy.Domain.Models
     {
         public long Id { get; set; }
 
-        public override bool Equals(object obj) => base.Equals(obj);
+        public override bool Equals(object obj) => obj is BaseEntity entity && entity.Id == Id;
 
-        public override int GetHashCode() => throw new NotImplementedException();
+        public override int GetHashCode() => HashCode.Combine(Id);
     }
 }

@@ -8,18 +8,17 @@ namespace Dell.Academy.Domain.Models.Validations
         {
             RuleFor(a => a.Street).NotEmpty().Length(3, 15);
 
-            RuleFor(a => a.Number).NotEmpty();
+            RuleFor(a => a.Number).GreaterThan(0);
 
-            RuleFor(a => a.Complement).NotEmpty();
+            RuleFor(a => a.Complement).Length(3, 15);
 
-            RuleFor(a => a.Cep).NotEmpty();
+            RuleFor(a => a.Cep).NotEmpty().Length(8);
 
-            RuleFor(a => a.District).NotEmpty();
+            RuleFor(a => a.District).NotEmpty().Length(3, 15);
 
-            RuleFor(a => a.City).NotEmpty();
+            RuleFor(a => a.City).NotEmpty().Length(3, 15);
 
-            RuleFor(a => a.State).NotEmpty();
+            RuleFor(a => a.State).NotEmpty().Length(2);
         }
-
     }
 }
