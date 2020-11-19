@@ -18,9 +18,9 @@ namespace Dell.Academy.Infra.Data.Repository
             DbSet = Context.Set<TEntity>();
         }
 
-        public async Task<List<TEntity>> GetAllAsync() => await DbSet.ToListAsync();
+        public async Task<List<TEntity>> GetAllAsync() => await DbSet.AsNoTracking().ToListAsync();
 
-        public async Task<TEntity> GetByIdAsync(long id) => await DbSet.FirstOrDefaultAsync(e => e.Id == id);
+        public async Task<TEntity> GetByIdAsync(long id) => await DbSet.AsNoTracking().FirstOrDefaultAsync(e => e.Id == id);
 
         public async Task<bool> InsertAsync(TEntity entity)
         {

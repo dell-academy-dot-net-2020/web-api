@@ -13,6 +13,10 @@
         public long ProviderId { get; private set; }
         public Provider Provider { get; private set; }
 
+        public Address()
+        {
+        }
+
         public Address(string street, int number, string complement, string cep, string district, string city, string state)
         {
             Street = street;
