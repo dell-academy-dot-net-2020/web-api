@@ -1,4 +1,6 @@
-﻿using Microsoft.Extensions.Configuration;
+﻿using Dell.Academy.Domain.Interfaces;
+using Dell.Academy.Infra.Data.Repository;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace Dell.Academy.Infra.CrossCutting.IoC
@@ -16,6 +18,8 @@ namespace Dell.Academy.Infra.CrossCutting.IoC
             // Domain - Commands
 
             // Infra - Data
+            services.AddScoped<IAddressRepository, AddressRepository>();
+            services.AddScoped<IProductRepository, ProductRepository>();
 
             // Infra - Seed Data
         }

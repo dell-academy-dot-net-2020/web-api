@@ -16,6 +16,10 @@ namespace Dell.Academy.Domain.Models
         public long CategoryId { get; private set; }
         public Category Category { get; private set; }
 
+        public Product()
+        {
+        }
+
         public Product(string name, string description, decimal value, DateTime register, bool active, long providerId, long categoryId)
         {
             Name = name;

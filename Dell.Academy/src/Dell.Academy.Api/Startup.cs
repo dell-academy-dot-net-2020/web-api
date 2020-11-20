@@ -1,4 +1,6 @@
 using Dell.Academy.Api.Configurations;
+using Dell.Academy.Domain.Interfaces;
+using Dell.Academy.Infra.CrossCutting.IoC;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
@@ -28,6 +30,7 @@ namespace Dell.Academy.Api
             // Adding MediatR for Domain Events and Notifications
 
             // .NET Native DI Abstraction
+            services.AddDependencyInjectionConfig(Configuration);
         }
 
         public static void Configure(IApplicationBuilder app, IWebHostEnvironment env)

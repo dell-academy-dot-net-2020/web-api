@@ -14,7 +14,7 @@ namespace Dell.Academy.Domain.Models
         public List<Product> Products { get; private set; }
 
         // EF Relational
-        protected Provider()
+        public Provider()
         {
         }
 

@@ -2,6 +2,7 @@
 using Dell.Academy.Domain.Models;
 using Dell.Academy.Infra.Data.Context;
 using Microsoft.EntityFrameworkCore;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace Dell.Academy.Infra.Data.Repository
@@ -12,7 +13,10 @@ namespace Dell.Academy.Infra.Data.Repository
         {
         }
 
-        public async Task<Provider> GetProviderByProviderIdAsync(long providerId)
-            => await DbSet.AsNoTracking().FirstOrDefaultAsync(a => a.ProviderId == providerId);
+        public async Task<Provider> GetProviderWithAddressAndProductsByIdAsync(long id)
+            => await DbSet.AsNoTracking().Include(p => p.Address).Include(p => p.Products).FirstOrDefaultAsync(p => p.Id == id);
+
+        public async Task<List<Provider>> GetProvidersWithAddressAsync()
+            => await DbSet.AsNoTracking().Include(p => p.Address).ToListAsync();
     }
 }
