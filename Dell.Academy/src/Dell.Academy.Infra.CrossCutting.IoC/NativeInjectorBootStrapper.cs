@@ -22,7 +22,6 @@ namespace Dell.Academy.Infra.CrossCutting.IoC
             services.AddScoped<ICategoryRepository, CategoryRepository>();
             services.AddScoped<IProductRepository, ProductRepository>();
             services.AddScoped<IProviderRepository, ProviderRepository>();
-            
 
             // Infra - Seed Data
         }
