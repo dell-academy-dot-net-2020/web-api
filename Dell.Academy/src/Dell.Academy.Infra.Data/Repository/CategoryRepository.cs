@@ -14,5 +14,8 @@ namespace Dell.Academy.Infra.Data.Repository
 
         public async Task<Category> GetCategoryWithAllProductsByIdAsync(long id)
             => await DbSet.AsNoTracking().Include(c => c.Products).FirstOrDefaultAsync(c => c.Id == id);
+
+        public async Task<bool> CategoryWithNameExistsAsync(string name)
+            => await DbSet.AsNoTracking().AnyAsync(c => c.Name == name);
     }
 }

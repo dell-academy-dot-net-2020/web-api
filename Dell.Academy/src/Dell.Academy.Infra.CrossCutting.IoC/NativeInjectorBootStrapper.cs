@@ -1,4 +1,6 @@
-﻿using Dell.Academy.Domain.Interfaces;
+﻿using Dell.Academy.Application.Interfaces;
+using Dell.Academy.Application.Services;
+using Dell.Academy.Domain.Interfaces;
 using Dell.Academy.Infra.Data.Repository;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -13,7 +15,8 @@ namespace Dell.Academy.Infra.CrossCutting.IoC
 
             // Application
 
-            // Domain - Events
+            // Domain - Services
+            services.AddScoped<ICategoryService, CategoryService>();
 
             // Domain - Commands
 

@@ -1,5 +1,5 @@
+using AutoMapper;
 using Dell.Academy.Api.Configurations;
-using Dell.Academy.Domain.Interfaces;
 using Dell.Academy.Infra.CrossCutting.IoC;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -24,6 +24,7 @@ namespace Dell.Academy.Api
             services.AddDatabaseConfiguration(Configuration);
 
             // AutoMapper Settings
+            services.AddAutoMapperConfiguration();
 
             // Swagger Config
 
@@ -31,14 +32,12 @@ namespace Dell.Academy.Api
 
             // .NET Native DI Abstraction
             services.AddDependencyInjectionConfig(Configuration);
+            services.AddLogging();
         }
 
-        public static void Configure(IApplicationBuilder app, IWebHostEnvironment env)
+        public static void Configure(IApplicationBuilder app, IWebHostEnvironment env, IMapper mapper)
         {
-            if (env.IsDevelopment())
-            {
-                app.UseDeveloperExceptionPage();
-            }
+            if (env.IsDevelopment()) app.UseDeveloperExceptionPage();
 
             app.UseHttpsRedirection();
 
