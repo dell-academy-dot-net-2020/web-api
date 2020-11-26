@@ -3,6 +3,7 @@ using Dell.Academy.Application.ViewModels;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace Dell.Academy.Api.Controllers
@@ -18,6 +19,30 @@ namespace Dell.Academy.Api.Controllers
         {
             _service = service;
             _logger = logger;
+        }
+
+        [HttpGet]
+        public async Task<ActionResult<List<CategoryViewModel>>> Get()
+        {
+            var categories = await _service.GetCategoriesAsync();
+            _logger.LogInformation($"Temos {categories.Count} categories");
+            return categories;
+        }
+
+        [HttpGet]
+        [Route("{id:int}")]
+        public async Task<ActionResult<CategoryViewModel>> Get(long id)
+        {
+            try
+            {
+                var category = await _service.GetCategoryByIdAsync(id);
+                _logger.LogInformation($"Categoria {category?.Name} encontrada");
+                return category;
+            }
+            catch (Exception ex)
+            {
+                return NotFound(ex.Message);
+            }
         }
 
         [HttpPost]

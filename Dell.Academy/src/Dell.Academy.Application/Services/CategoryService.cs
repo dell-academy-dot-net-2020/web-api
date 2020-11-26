@@ -5,6 +5,7 @@ using Dell.Academy.Domain.Interfaces;
 using Dell.Academy.Domain.Models;
 using Dell.Academy.Domain.Models.Validations;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -19,6 +20,21 @@ namespace Dell.Academy.Application.Services
         {
             _repository = repository;
             _mapper = mapper;
+        }
+
+        public async Task<CategoryViewModel> GetCategoryByIdAsync(long id)
+        {
+            var category = await _repository.GetByIdAsync(id);
+            if (category is null)
+                throw new ApplicationException($"Categoria com o id {id} não foi encontrada.");
+
+            return _mapper.Map<CategoryViewModel>(category);
+        }
+
+        public async Task<List<CategoryViewModel>> GetCategoriesAsync()
+        {
+            var categories = await _repository.GetAllAsync();
+            return _mapper.Map<List<CategoryViewModel>>(categories);
         }
 
         public async Task InsertCategoryAsync(CategoryViewModel viewModel)

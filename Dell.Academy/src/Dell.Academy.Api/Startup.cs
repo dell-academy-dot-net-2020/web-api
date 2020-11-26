@@ -1,4 +1,3 @@
-using AutoMapper;
 using Dell.Academy.Api.Configurations;
 using Dell.Academy.Infra.CrossCutting.IoC;
 using Microsoft.AspNetCore.Builder;
@@ -32,10 +31,12 @@ namespace Dell.Academy.Api
 
             // .NET Native DI Abstraction
             services.AddDependencyInjectionConfig(Configuration);
+
+            // Native Logs
             services.AddLogging();
         }
 
-        public static void Configure(IApplicationBuilder app, IWebHostEnvironment env, IMapper mapper)
+        public static void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
             if (env.IsDevelopment()) app.UseDeveloperExceptionPage();
 

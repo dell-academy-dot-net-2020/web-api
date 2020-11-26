@@ -2,6 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using System;
 
 namespace Dell.Academy.Api.Configurations
 {
@@ -9,7 +10,10 @@ namespace Dell.Academy.Api.Configurations
     {
         public static void AddDatabaseConfiguration(this IServiceCollection services, IConfiguration configuration)
         {
-            services.AddDbContext<ApiContext>(opt => opt.UseMySQL(configuration.GetConnectionString("DefaultConnection")));
+            var connectionString = configuration.GetConnectionString($"DefaultConnection@{Environment.MachineName}") ??
+                configuration.GetConnectionString("DefaultConnection");
+
+            services.AddDbContext<ApiContext>(opt => opt.UseMySQL(connectionString));
         }
     }
 }
