@@ -1,4 +1,5 @@
-﻿using Dell.Academy.Application.Interfaces;
+﻿using Dell.Academy.Application.Extensions.Exceptions;
+using Dell.Academy.Application.Interfaces;
 using Dell.Academy.Application.ViewModels;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
@@ -25,23 +26,29 @@ namespace Dell.Academy.Api.Controllers
         public async Task<ActionResult<List<CategoryViewModel>>> Get()
         {
             var categories = await _service.GetCategoriesAsync();
-            _logger.LogInformation($"Temos {categories.Count} categories");
+            _logger.LogInformation($"Temos {categories.Count} categorias cadastradas");
             return categories;
         }
 
         [HttpGet]
-        [Route("{id:int}")]
+        [Route("{id:long}")]
         public async Task<ActionResult<CategoryViewModel>> Get(long id)
         {
             try
             {
                 var category = await _service.GetCategoryByIdAsync(id);
-                _logger.LogInformation($"Categoria {category?.Name} encontrada");
+                _logger.LogInformation($"A categoria {category?.Name} foi encontrada");
                 return category;
+            }
+            catch (NotFoundException ex)
+            {
+                _logger.LogError(ex, $"A categoria não foi encontrada");
+                return NotFound(ex.Message);
             }
             catch (Exception ex)
             {
-                return NotFound(ex.Message);
+                _logger.LogCritical(ex, "Falha na comunicação com o banco");
+                return BadRequest(ex.Message);
             }
         }
 
@@ -56,7 +63,22 @@ namespace Dell.Academy.Api.Controllers
             }
             catch (Exception ex)
             {
-                _logger.LogError("Não foi possível cadastrar!");
+                _logger.LogCritical(ex, "Não foi possível cadastrar a categoria!");
+                return BadRequest(ex.Message);
+            }
+        }
+
+        [HttpDelete]
+        [Route("{id:long}")]
+        public async Task<ActionResult> Delete(long id)
+        {
+            try
+            {
+                return Ok();
+            }
+            catch (Exception ex)
+            {
+                _logger.LogCritical(ex, "Não foi possível deletar o categoria!");
                 return BadRequest(ex.Message);
             }
         }

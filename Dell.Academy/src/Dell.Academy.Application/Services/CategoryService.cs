@@ -1,4 +1,6 @@
 ﻿using AutoMapper;
+using Dell.Academy.Application.Extensions;
+using Dell.Academy.Application.Extensions.Exceptions;
 using Dell.Academy.Application.Interfaces;
 using Dell.Academy.Application.ViewModels;
 using Dell.Academy.Domain.Interfaces;
@@ -6,7 +8,6 @@ using Dell.Academy.Domain.Models;
 using Dell.Academy.Domain.Models.Validations;
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 
 namespace Dell.Academy.Application.Services
@@ -24,9 +25,9 @@ namespace Dell.Academy.Application.Services
 
         public async Task<CategoryViewModel> GetCategoryByIdAsync(long id)
         {
-            var category = await _repository.GetByIdAsync(id);
+            var category = await _repository.GetCategoryWithAllProductsByIdAsync(id);
             if (category is null)
-                throw new ApplicationException($"Categoria com o id {id} não foi encontrada.");
+                throw new NotFoundException(ErrorMessages.NotFoundError("Categoria", id));
 
             return _mapper.Map<CategoryViewModel>(category);
         }
@@ -41,8 +42,9 @@ namespace Dell.Academy.Application.Services
         {
             var category = _mapper.Map<Category>(viewModel);
             var validator = new CategoryValidator();
-            if (!validator.Validate(category).IsValid)
-                throw new ApplicationException(validator.Validate(category).Errors.FirstOrDefault().ErrorMessage);
+            var validationResult = validator.Validate(category);
+            if (!validationResult.IsValid)
+                throw new ValidationException(ErrorMessages.ValidationErrors(validationResult));
 
             var categoryExists = await _repository.CategoryWithNameExistsAsync(viewModel.Name);
             if (categoryExists)
