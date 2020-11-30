@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
+using System.Net;
 using System.Threading.Tasks;
 
 namespace Dell.Academy.Api.Controllers
@@ -74,7 +75,13 @@ namespace Dell.Academy.Api.Controllers
         {
             try
             {
-                return Ok();
+                await _service.DeleteCategoryAsync(id);
+                return NoContent();
+            }
+            catch (NotFoundException ex)
+            {
+                _logger.LogError(ex, $"A categoria não foi encontrada");
+                return NotFound(ex.Message);
             }
             catch (Exception ex)
             {

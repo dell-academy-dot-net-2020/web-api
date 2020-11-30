@@ -6,7 +6,6 @@ using Dell.Academy.Application.ViewModels;
 using Dell.Academy.Domain.Interfaces;
 using Dell.Academy.Domain.Models;
 using Dell.Academy.Domain.Models.Validations;
-using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
@@ -48,11 +47,20 @@ namespace Dell.Academy.Application.Services
 
             var categoryExists = await _repository.CategoryWithNameExistsAsync(viewModel.Name);
             if (categoryExists)
-                throw new ApplicationException("Categoria já cadastrada!");
+                throw new CategoryException(ErrorMessages.CategoryNameExistsError);
 
             var commitResult = await _repository.InsertAsync(category);
             if (!commitResult)
-                throw new ApplicationException("Não foi possível salvar o registro no banco de dados.");
+                throw new DatabaseCommitException(ErrorMessages.DatabaseCommitError);
+        }
+
+        public async Task DeleteCategoryAsync(long id)
+        {
+            var category = await _repository.GetCategoryWithAllProductsByIdAsync(id);
+            if (category is null)
+                throw new NotFoundException(ErrorMessages.NotFoundError("Categoria", id));
+
+            await _repository.DeleteAsync(id);
         }
     }
 }
