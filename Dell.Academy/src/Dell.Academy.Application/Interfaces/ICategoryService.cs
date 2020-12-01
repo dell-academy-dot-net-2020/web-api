@@ -12,6 +12,8 @@ namespace Dell.Academy.Application.Interfaces
 
         Task InsertCategoryAsync(CategoryViewModel viewModel);
 
+        Task UpdateCategoryAsync(CategoryViewModel viewModel, long id);
+
         Task DeleteCategoryAsync(long id);
     }
 }

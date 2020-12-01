@@ -5,7 +5,6 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
-using System.Net;
 using System.Threading.Tasks;
 
 namespace Dell.Academy.Api.Controllers
@@ -62,9 +61,36 @@ namespace Dell.Academy.Api.Controllers
                 _logger.LogInformation("Categoria foi cadastrada com sucesso!");
                 return Ok();
             }
+            catch (NotFoundException ex)
+            {
+                _logger.LogError(ex, $"A categoria não foi encontrada");
+                return NotFound(ex.Message);
+            }
             catch (Exception ex)
             {
                 _logger.LogCritical(ex, "Não foi possível cadastrar a categoria!");
+                return BadRequest(ex.Message);
+            }
+        }
+
+        [HttpPut]
+        [Route("{id:long}")]
+        public async Task<ActionResult> Put(CategoryViewModel viewModel, long id)
+        {
+            try
+            {
+                await _service.UpdateCategoryAsync(viewModel, id);
+                _logger.LogInformation("Categoria foi atualizada com sucesso!");
+                return Ok();
+            }
+            catch (NotFoundException ex)
+            {
+                _logger.LogError(ex, $"A categoria não foi encontrada");
+                return NotFound(ex.Message);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogCritical(ex, "Não foi possível atualizar a categoria!");
                 return BadRequest(ex.Message);
             }
         }
