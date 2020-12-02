@@ -1,19 +1,19 @@
-﻿using Dell.Academy.Application.ViewModels;
-using System.Collections.Generic;
+﻿using Dell.Academy.Application.Extensions;
+using Dell.Academy.Application.ViewModels;
 using System.Threading.Tasks;
 
 namespace Dell.Academy.Application.Interfaces
 {
     public interface ICategoryService
     {
-        Task<CategoryViewModel> GetCategoryByIdAsync(long id);
+        Task<OperationResult> GetCategoryByIdAsync(long id);
 
-        Task<List<CategoryViewModel>> GetCategoriesAsync();
+        Task<OperationResult> GetCategoriesAsync();
 
-        Task InsertCategoryAsync(CategoryViewModel viewModel);
+        Task<OperationResult> InsertCategoryAsync(CategoryViewModel viewModel);
 
-        Task UpdateCategoryAsync(CategoryViewModel viewModel, long id);
+        Task<OperationResult> UpdateCategoryAsync(CategoryViewModel viewModel);
 
-        Task DeleteCategoryAsync(long id);
+        Task<OperationResult> DeleteCategoryAsync(long id);
     }
 }
