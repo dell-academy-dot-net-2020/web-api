@@ -1,5 +1,8 @@
 ﻿using Dell.Academy.Application.Extensions;
+using FluentValidation.Results;
 using Microsoft.AspNetCore.Mvc;
+using System.Collections.Generic;
+using System.Linq;
 using System.Net;
 
 namespace Dell.Academy.Api.Controllers
@@ -18,9 +21,12 @@ namespace Dell.Academy.Api.Controllers
         private ActionResult ErrorResponse(OperationResult result)
         {
             if (result.StatusCode == HttpStatusCode.NotFound)
-                return NotFound(result.Result.Errors);
+                return NotFound(MapErrorsToResponse(result.Result));
 
-            return BadRequest(result.Result.Errors);
+            return BadRequest(MapErrorsToResponse(result.Result));
         }
+
+        private static List<string> MapErrorsToResponse(ValidationResult validationResult)
+            => validationResult.Errors.Select(e => e.ErrorMessage).ToList();
     }
 }

@@ -7,12 +7,8 @@ namespace Dell.Academy.Application.Extensions
     {
         public object Content { get; private set; }
         public ValidationResult Result { get; private set; }
-        public bool IsValid => Result.IsValid;
+        public bool IsValid => Result?.IsValid ?? true;
         public HttpStatusCode StatusCode { get; private set; }
-
-        public OperationResult()
-        {
-        }
 
         public OperationResult(ValidationResult result, HttpStatusCode statusCode)
         {
@@ -20,10 +16,6 @@ namespace Dell.Academy.Application.Extensions
             StatusCode = statusCode;
         }
 
-        public OperationResult(object content)
-        {
-            Content = content;
-            Result = new ValidationResult();
-        }
+        public OperationResult(object content) => Content = content;
     }
 }

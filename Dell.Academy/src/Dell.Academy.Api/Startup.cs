@@ -26,6 +26,7 @@ namespace Dell.Academy.Api
             services.AddAutoMapperConfiguration();
 
             // Swagger Config
+            services.AddSwaggerConfiguration();
 
             // Adding MediatR for Domain Events and Notifications
 
@@ -45,8 +46,9 @@ namespace Dell.Academy.Api
             app.UseCors();
             app.UseHttpsRedirection();
             app.UseAuthentication();
-            app.UseAuthorization();
+            app.UseSwaggerSetup();
             app.UseRouting();
+            app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>
             {
