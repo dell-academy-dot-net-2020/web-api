@@ -13,14 +13,18 @@ namespace Dell.Academy.Api.Controllers
     {
         private readonly ICategoryService _service;
 
-        public CategoriesController(ICategoryService service)
-            => _service = service;
+        public CategoriesController(ICategoryService service) => _service = service;
 
         [HttpGet]
+        [ProducesResponseType(typeof(List<CategoryViewModel>), 200)]
+        [ProducesResponseType(typeof(ErrorViewModel), 500)]
         public async Task<ActionResult<List<CategoryViewModel>>> Get() => CustomResponse(await _service.GetCategoriesAsync());
 
         [HttpGet]
         [Route("{id:long}")]
+        [ProducesResponseType(typeof(CategoryViewModel), 200)]
+        [ProducesResponseType(typeof(ErrorViewModel), 404)]
+        [ProducesResponseType(typeof(ErrorViewModel), 500)]
         public async Task<ActionResult<CategoryViewModel>> Get(long id) => CustomResponse(await _service.GetCategoryByIdAsync(id));
 
         [HttpPost]
