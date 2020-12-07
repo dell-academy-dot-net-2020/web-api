@@ -28,10 +28,17 @@ namespace Dell.Academy.Api.Controllers
         public async Task<ActionResult<CategoryViewModel>> Get(long id) => CustomResponse(await _service.GetCategoryByIdAsync(id));
 
         [HttpPost]
+        [ProducesResponseType(typeof(CategoryViewModel), 200)]
+        [ProducesResponseType(typeof(ErrorViewModel), 400)]
+        [ProducesResponseType(typeof(ErrorViewModel), 500)]
         public async Task<ActionResult> Post(CategoryViewModel viewModel) => CustomResponse(await _service.InsertCategoryAsync(viewModel));
 
         [HttpPut]
         [Route("{id:long}")]
+        [ProducesResponseType(typeof(CategoryViewModel), 200)]
+        [ProducesResponseType(typeof(ErrorViewModel), 400)]
+        [ProducesResponseType(typeof(ErrorViewModel), 404)]
+        [ProducesResponseType(typeof(ErrorViewModel), 500)]
         public async Task<ActionResult> Put(CategoryViewModel viewModel, long id)
         {
             if (id != viewModel.Id)
@@ -42,6 +49,9 @@ namespace Dell.Academy.Api.Controllers
 
         [HttpDelete]
         [Route("{id:long}")]
+        [ProducesResponseType(typeof(CategoryViewModel), 200)]
+        [ProducesResponseType(typeof(ErrorViewModel), 404)]
+        [ProducesResponseType(typeof(ErrorViewModel), 500)]
         public async Task<ActionResult> Delete(long id) => CustomResponse(await _service.DeleteCategoryAsync(id));
     }
 }
