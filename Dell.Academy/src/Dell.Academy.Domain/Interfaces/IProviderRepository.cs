@@ -9,5 +9,7 @@ namespace Dell.Academy.Domain.Interfaces
         Task<Provider> GetProviderWithAddressAndProductsByIdAsync(long id);
 
         Task<List<Provider>> GetProvidersWithAddressAsync();
+
+        Task<bool> ProviderWithDocumentNumberExistsAsync(string documentNumber);
     }
 }

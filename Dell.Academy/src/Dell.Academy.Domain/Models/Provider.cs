@@ -1,4 +1,5 @@
 ﻿using Dell.Academy.Domain.Models.Enums;
+using Dell.Academy.Domain.Models.Validations;
 using Dell.Academy.Domain.Models.Validations.Utils;
 using System.Collections.Generic;
 
@@ -24,7 +25,7 @@ namespace Dell.Academy.Domain.Models
             DocumentNumber = Utils.OnlyNumbers(documentNumber);
             ProviderType = providerType;
             Active = active;
-            Address = address;
+            Address = new AddressValidator().Validate(address).IsValid ? address : null;
             Products = products;
         }
     }

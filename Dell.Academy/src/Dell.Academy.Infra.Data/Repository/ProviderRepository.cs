@@ -18,5 +18,8 @@ namespace Dell.Academy.Infra.Data.Repository
 
         public async Task<List<Provider>> GetProvidersWithAddressAsync()
             => await DbSet.AsNoTracking().Include(p => p.Address).ToListAsync();
+
+        public async Task<bool> ProviderWithDocumentNumberExistsAsync(string documentNumber)
+            => await DbSet.AsNoTracking().AnyAsync(p => p.DocumentNumber == documentNumber);
     }
 }

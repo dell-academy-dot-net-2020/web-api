@@ -9,6 +9,7 @@ namespace Dell.Academy.Domain.Models.Validations
         public ProviderValidator()
         {
             RuleFor(p => p.Name).NotEmpty().Length(3, 15);
+            RuleFor(p => p.Address).NotNull();
 
             When(p => p.ProviderType == ProviderType.Person, () =>
             {
