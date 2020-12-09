@@ -1,4 +1,5 @@
 ﻿using Dell.Academy.Application.Extensions;
+using Dell.Academy.Domain.Extensions;
 using FluentValidation.Results;
 using System.Collections.Generic;
 using System.Net;

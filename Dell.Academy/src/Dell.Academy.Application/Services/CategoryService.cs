@@ -2,6 +2,7 @@
 using Dell.Academy.Application.Extensions;
 using Dell.Academy.Application.Interfaces;
 using Dell.Academy.Application.ViewModels;
+using Dell.Academy.Domain.Extensions;
 using Dell.Academy.Domain.Interfaces;
 using Dell.Academy.Domain.Models;
 using Dell.Academy.Domain.Models.Validations;

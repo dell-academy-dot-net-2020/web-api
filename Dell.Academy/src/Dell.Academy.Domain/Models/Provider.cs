@@ -25,7 +25,7 @@ namespace Dell.Academy.Domain.Models
             DocumentNumber = Utils.OnlyNumbers(documentNumber);
             ProviderType = providerType;
             Active = active;
-            Address = new AddressValidator().Validate(address).IsValid ? address : null;
+            Address = address;
             Products = products;
         }
     }

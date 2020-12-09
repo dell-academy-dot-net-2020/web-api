@@ -1,6 +1,6 @@
-﻿using Dell.Academy.Application.Extensions;
-using Dell.Academy.Application.Interfaces;
+﻿using Dell.Academy.Application.Interfaces;
 using Dell.Academy.Application.ViewModels;
+using Dell.Academy.Domain.Extensions;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
 using System.Threading.Tasks;

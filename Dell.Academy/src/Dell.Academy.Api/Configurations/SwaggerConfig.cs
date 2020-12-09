@@ -15,17 +15,6 @@ namespace Dell.Academy.Api.Configurations
                 Version = "v1",
                 Title = "Dell Academy Api",
                 Description = "Web Api for Dell Academy C#",
-                Contact = new OpenApiContact
-                {
-                    Name = "Cleo",
-                    Email = "cleo.silva@dellead.com",
-                    Url = new Uri("http://leadfortaleza.com.br/portal"),
-                },
-                License = new OpenApiLicense
-                {
-                    Name = "Mit License",
-                    Url = new Uri("https://opensource.org/licenses/MIT"),
-                }
             }));
         }
 

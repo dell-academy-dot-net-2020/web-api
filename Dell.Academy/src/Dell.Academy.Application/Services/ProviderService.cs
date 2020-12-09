@@ -2,6 +2,7 @@
 using Dell.Academy.Application.Extensions;
 using Dell.Academy.Application.Interfaces;
 using Dell.Academy.Application.ViewModels;
+using Dell.Academy.Domain.Extensions;
 using Dell.Academy.Domain.Interfaces;
 using Dell.Academy.Domain.Models;
 using Dell.Academy.Domain.Models.Validations;
@@ -40,12 +41,17 @@ namespace Dell.Academy.Application.Services
         public async Task<OperationResult> InsertProviderAsync(ProviderViewModel viewModel)
         {
             var provider = _mapper.Map<Provider>(viewModel);
-            var validator = new ProviderValidator();
-            var validationResult = validator.Validate(provider);
-            if (!validationResult.IsValid)
-                return Error(validationResult);
+            var providerValidator = new ProviderValidator();
+            var addressValidator = new AddressValidator();
+            var providerValidationResult = providerValidator.Validate(provider);
+            var addressValidationResult = addressValidator.Validate(provider.Address);
+            if (!providerValidationResult.IsValid)
+                return Error(providerValidationResult);
 
-            var providerExists = await _repository.ProviderWithDocumentNumberExistsAsync(viewModel.DocumentNumber);
+            if (!addressValidationResult.IsValid)
+                return Error(addressValidationResult);
+
+            var providerExists = await _repository.ProviderWithDocumentNumberExistsAsync(provider.DocumentNumber);
             if (providerExists)
                 return Error(ErrorMessages.ProviderExistsError);
 
