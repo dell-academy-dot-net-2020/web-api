@@ -2,10 +2,7 @@
 {
     public class Address : BaseEntity
     {
-        RuleFor(customer => customer.Street).NotNull().OverridePropertyName("Rua");
-        RuleFor(customer => customer.Number).NotNull().OverridePropertyName("Número");
-
-
+      
         public string Street { get; private set; }
         public int Number { get; private set; }
         public string Complement { get; private set; }
