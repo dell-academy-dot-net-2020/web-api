@@ -41,10 +41,8 @@ namespace Dell.Academy.Application.Services
         public async Task<OperationResult> InsertCategoryAsync(CategoryViewModel viewModel)
         {
             var category = _mapper.Map<Category>(viewModel);
-            var validator = new CategoryValidator();
-            var validationResult = validator.Validate(category);
-            if (!validationResult.IsValid)
-                return Error(validationResult);
+            if (!EntityIsValid(new CategoryValidator(), category))
+                return ValidationErrors();
 
             var categoryExists = await _repository.CategoryWithNameExistsAsync(viewModel.Name);
             if (categoryExists)
@@ -56,10 +54,8 @@ namespace Dell.Academy.Application.Services
         public async Task<OperationResult> UpdateCategoryAsync(CategoryViewModel viewModel)
         {
             var category = _mapper.Map<Category>(viewModel);
-            var validator = new CategoryValidator();
-            var validationResult = validator.Validate(category);
-            if (!validationResult.IsValid)
-                return Error(validationResult);
+            if (!EntityIsValid(new CategoryValidator(), category))
+                return ValidationErrors();
 
             var categoryFomDb = await _repository.GetByIdAsync(category.Id);
             if (categoryFomDb is null)

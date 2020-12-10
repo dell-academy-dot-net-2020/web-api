@@ -41,19 +41,12 @@ namespace Dell.Academy.Application.Services
         public async Task<OperationResult> InsertProviderAsync(ProviderViewModel viewModel)
         {
             var provider = _mapper.Map<Provider>(viewModel);
-            var providerValidator = new ProviderValidator();
-            var addressValidator = new AddressValidator();
-            var providerValidationResult = providerValidator.Validate(provider);
-            var addressValidationResult = addressValidator.Validate(provider.Address);
-            if (!providerValidationResult.IsValid)
-                return Error(providerValidationResult);
-
-            if (!addressValidationResult.IsValid)
-                return Error(addressValidationResult);
+            if (!EntityIsValid(new ProviderValidator(), provider) || !EntityIsValid(new AddressValidator(), provider.Address))
+                return ValidationErrors();
 
             var providerExists = await _repository.ProviderWithDocumentNumberExistsAsync(provider.DocumentNumber);
             if (providerExists)
-                return Error(ErrorMessages.ProviderExistsError);
+                return Error(ErrorMessages.ProviderExistsError(provider.DocumentNumber));
 
             return Commit(await _repository.InsertAsync(provider));
         }
