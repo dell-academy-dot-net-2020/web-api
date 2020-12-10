@@ -50,5 +50,27 @@ namespace Dell.Academy.Application.Services
 
             return Commit(await _repository.InsertAsync(provider));
         }
+
+        public async Task<OperationResult> UpdateProviderAsync(ProviderViewModel viewModel)
+        {
+            var Provider = _mapper.Map<Provider>(viewModel);
+            if (!EntityIsValid(new ProviderValidator(), Provider))
+                return ValidationErrors();
+
+            var ProvideryFomDb = await _repository.GetByIdAsync(Provider.Id);
+            if (ProvideryFomDb is null)
+                return Error(ErrorMessages.NotFoundError("Fornecedor", Provider.Id), HttpStatusCode.NotFound);
+
+            return Commit(await _repository.UpdateAsync(Provider));
+        }
+
+        public async Task<OperationResult> DeleteProviderAsync(long id)
+        {
+            var Provider = await _repository.GetByIdAsync(id);
+            if (Provider is null)
+                return Error(ErrorMessages.NotFoundError("Fornecedor", id), HttpStatusCode.NotFound);
+
+            return Commit(await _repository.DeleteAsync(id));
+        }
     }
 }
