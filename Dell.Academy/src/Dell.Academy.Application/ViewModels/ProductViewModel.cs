@@ -7,6 +7,7 @@
         public string Description { get; set; }
         public decimal Value { get; set; }
         public bool Active { get; set; }
+        public string Sku { get; set; }
         public string ProviderName { get; set; }
         public long ProviderId { get; set; }
         public string CategoryName { get; set; }

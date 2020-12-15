@@ -52,6 +52,9 @@ namespace Dell.Academy.Application.Services
             if (await _providerRepository.GetByIdAsync(product.ProviderId) is null)
                 return Error(ErrorMessages.NotFoundError("Fornecedor", product.ProviderId));
 
+            if (await _productRepository.ProductSkuExists(product.Sku))
+                return Error(ErrorMessages.ProductSkuExistsError);
+
             return Commit(await _productRepository.InsertAsync(product));
         }
 
@@ -70,6 +73,9 @@ namespace Dell.Academy.Application.Services
             var productFromDb = await _productRepository.GetByIdAsync(product.Id);
             if (productFromDb is null)
                 return Error(ErrorMessages.NotFoundError("Produto", product.Id));
+
+            if (await _productRepository.ProductSkuExists(product.Sku))
+                return Error(ErrorMessages.ProductSkuExistsError);
 
             product.SetProductRegister(productFromDb.Register);
             return Commit(await _productRepository.UpdateAsync(product));
