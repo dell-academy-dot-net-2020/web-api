@@ -15,7 +15,7 @@ namespace Dell.Academy.Infra.Data.Repository
         }
 
         public async Task<Product> GetProductByIdWithCategoryAndProviderAsync(long id)
-            => await DbSet.AsNoTracking().FirstOrDefaultAsync(p => p.Id == id);
+            => await DbSet.AsNoTracking().Include(p => p.Category).Include(p => p.Provider).FirstOrDefaultAsync(p => p.Id == id);
 
         public async Task<List<Product>> GetProductsByProviderIdAsync(long providerId)
             => await DbSet.AsNoTracking().Where(p => p.ProviderId == providerId).ToListAsync();

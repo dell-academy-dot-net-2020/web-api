@@ -17,6 +17,7 @@ namespace Dell.Academy.Infra.CrossCutting.IoC
 
             // Domain - Services
             services.AddScoped<ICategoryService, CategoryService>();
+            services.AddScoped<IProductService, ProductService>();
             services.AddScoped<IProviderService, ProviderService>();
 
             // Domain - Commands

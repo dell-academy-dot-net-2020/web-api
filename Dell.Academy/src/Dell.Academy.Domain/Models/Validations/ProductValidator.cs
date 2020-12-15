@@ -1,5 +1,5 @@
 ﻿using FluentValidation;
-using Microsoft.VisualBasic;
+using System;
 
 namespace Dell.Academy.Domain.Models.Validations
 {
@@ -13,7 +13,7 @@ namespace Dell.Academy.Domain.Models.Validations
 
             RuleFor(pd => pd.Value).NotEmpty().GreaterThan(0).OverridePropertyName("Valor");
 
-            RuleFor(pd => pd.Register).Equal(DateAndTime.Now).OverridePropertyName("Resgitros");
+            RuleFor(pd => pd.Register).LessThanOrEqualTo(DateTime.UtcNow).OverridePropertyName("Resgitros");
         }
     }
 }

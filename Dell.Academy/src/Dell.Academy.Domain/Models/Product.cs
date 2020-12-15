@@ -20,15 +20,16 @@ namespace Dell.Academy.Domain.Models
         {
         }
 
-        public Product(string name, string description, decimal value, DateTime register, bool active, long providerId, long categoryId)
+        public Product(string name, string description, decimal value, bool active, long providerId, long categoryId)
         {
             Name = name;
             Description = description;
             Value = value;
-            Register = register;
             Active = active;
             ProviderId = providerId;
             CategoryId = categoryId;
         }
+
+        public void SetProductRegister(DateTime dateRegister) => Register = dateRegister;
     }
 }

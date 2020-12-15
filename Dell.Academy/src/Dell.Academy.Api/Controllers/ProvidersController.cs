@@ -1,5 +1,6 @@
 ﻿using Dell.Academy.Application.Interfaces;
 using Dell.Academy.Application.ViewModels;
+using Dell.Academy.Domain.Extensions;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
 using System.Threading.Tasks;
@@ -31,5 +32,40 @@ namespace Dell.Academy.Api.Controllers
         [ProducesResponseType(typeof(ErrorViewModel), 400)]
         [ProducesResponseType(typeof(ErrorViewModel), 500)]
         public async Task<ActionResult> Post(ProviderViewModel viewModel) => CustomResponse(await _service.InsertProviderAsync(viewModel));
+
+        [HttpPut]
+        [Route("{id:long}")]
+        [ProducesResponseType(200)]
+        [ProducesResponseType(typeof(ErrorViewModel), 400)]
+        [ProducesResponseType(typeof(ErrorViewModel), 404)]
+        [ProducesResponseType(typeof(ErrorViewModel), 500)]
+        public async Task<ActionResult> Put(ProviderViewModel viewModel, long id)
+        {
+            if (id != viewModel.Id)
+                return BadRequest(ErrorMessages.IdDoNotMatch);
+
+            return CustomResponse(await _service.UpdateProviderAsync(viewModel));
+        }
+
+        [HttpPut]
+        [Route("atualizar-endereco/{id:long}")]
+        [ProducesResponseType(200)]
+        [ProducesResponseType(typeof(ErrorViewModel), 400)]
+        [ProducesResponseType(typeof(ErrorViewModel), 404)]
+        [ProducesResponseType(typeof(ErrorViewModel), 500)]
+        public async Task<ActionResult> Put(AddressViewModel viewModel, long id)
+        {
+            if (id != viewModel.ProviderId)
+                return BadRequest(ErrorMessages.IdDoNotMatch);
+
+            return CustomResponse(await _service.UpdateAddressAsync(viewModel));
+        }
+
+        [HttpDelete]
+        [Route("{id:long}")]
+        [ProducesResponseType(200)]
+        [ProducesResponseType(typeof(ErrorViewModel), 404)]
+        [ProducesResponseType(typeof(ErrorViewModel), 500)]
+        public async Task<ActionResult> Delete(long id) => CustomResponse(await _service.DeleteProviderAsync(id));
     }
 }

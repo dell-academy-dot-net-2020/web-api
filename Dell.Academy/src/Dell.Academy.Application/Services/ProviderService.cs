@@ -14,24 +14,26 @@ namespace Dell.Academy.Application.Services
 {
     public class ProviderService : BaseService, IProviderService
     {
-        private readonly IProviderRepository _repository;
+        private readonly IProviderRepository _providerRepository;
+        private readonly IAddressRepository _addressRepository;
         private readonly IMapper _mapper;
 
-        public ProviderService(IProviderRepository repository, IMapper mapper)
+        public ProviderService(IProviderRepository repository, IAddressRepository addressRepository, IMapper mapper)
         {
-            _repository = repository;
+            _providerRepository = repository;
+            _addressRepository = addressRepository;
             _mapper = mapper;
         }
 
         public async Task<OperationResult> GetProvidersAsync()
         {
-            var providers = await _repository.GetProvidersWithAddressAsync();
+            var providers = await _providerRepository.GetProvidersWithAddressAsync();
             return Success(_mapper.Map<List<ProviderViewModel>>(providers));
         }
 
         public async Task<OperationResult> GetProviderByIdAsync(long id)
         {
-            var provider = await _repository.GetProviderWithAddressAndProductsByIdAsync(id);
+            var provider = await _providerRepository.GetProviderWithAddressAndProductsByIdAsync(id);
             if (provider is null)
                 return Error(ErrorMessages.NotFoundError("Fornecedor", id), HttpStatusCode.NotFound);
 
@@ -44,33 +46,51 @@ namespace Dell.Academy.Application.Services
             if (!EntityIsValid(new ProviderValidator(), provider) || !EntityIsValid(new AddressValidator(), provider.Address))
                 return ValidationErrors();
 
-            var providerExists = await _repository.ProviderWithDocumentNumberExistsAsync(provider.DocumentNumber);
-            if (providerExists)
+            if (await ProviderWithDocumentNumberExistsAsync(provider.DocumentNumber))
                 return Error(ErrorMessages.ProviderExistsError(provider.DocumentNumber));
 
-            return Commit(await _repository.InsertAsync(provider));
+            return Commit(await _providerRepository.InsertAsync(provider));
         }
 
         public async Task<OperationResult> UpdateProviderAsync(ProviderViewModel viewModel)
         {
-            var Provider = _mapper.Map<Provider>(viewModel);
-            if (!EntityIsValid(new ProviderValidator(), Provider))
+            var provider = _mapper.Map<Provider>(viewModel);
+            if (!EntityIsValid(new ProviderValidator(), provider))
                 return ValidationErrors();
 
-            var ProvideryFomDb = await _repository.GetByIdAsync(Provider.Id);
-            if (ProvideryFomDb is null)
-                return Error(ErrorMessages.NotFoundError("Fornecedor", Provider.Id), HttpStatusCode.NotFound);
+            var provideryFomDb = await _providerRepository.GetByIdAsync(provider.Id);
+            if (provideryFomDb is null)
+                return Error(ErrorMessages.NotFoundError("Fornecedor", provider.Id), HttpStatusCode.NotFound);
 
-            return Commit(await _repository.UpdateAsync(Provider));
+            if (await ProviderWithDocumentNumberExistsAsync(provider.DocumentNumber))
+                return Error(ErrorMessages.ProviderExistsError(provider.DocumentNumber));
+
+            return Commit(await _providerRepository.UpdateAsync(provider));
+        }
+
+        public async Task<OperationResult> UpdateAddressAsync(AddressViewModel viewModel)
+        {
+            var address = _mapper.Map<Address>(viewModel);
+            if (!EntityIsValid(new AddressValidator(), address))
+                return ValidationErrors();
+
+            var provideryFomDb = await _providerRepository.GetByIdAsync(address.ProviderId);
+            if (provideryFomDb is null)
+                return Error(ErrorMessages.NotFoundError("Fornecedor", address.ProviderId), HttpStatusCode.NotFound);
+
+            return Commit(await _addressRepository.UpdateAsync(address));
         }
 
         public async Task<OperationResult> DeleteProviderAsync(long id)
         {
-            var Provider = await _repository.GetByIdAsync(id);
-            if (Provider is null)
+            var provider = await _providerRepository.GetByIdAsync(id);
+            if (provider is null)
                 return Error(ErrorMessages.NotFoundError("Fornecedor", id), HttpStatusCode.NotFound);
 
-            return Commit(await _repository.DeleteAsync(id));
+            return Commit(await _providerRepository.DeleteAsync(id));
         }
+
+        private async Task<bool> ProviderWithDocumentNumberExistsAsync(string documentNumber)
+            => await _providerRepository.ProviderWithDocumentNumberExistsAsync(documentNumber);
     }
 }

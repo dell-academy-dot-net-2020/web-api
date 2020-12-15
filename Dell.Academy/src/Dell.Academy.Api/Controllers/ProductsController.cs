@@ -8,30 +8,30 @@ using System.Threading.Tasks;
 namespace Dell.Academy.Api.Controllers
 {
     [ApiController]
-    [Route("/api/categorias")]
-    public class CategoriesController : ApiController
+    [Route("/api/produtos")]
+    public class ProductsController : ApiController
     {
-        private readonly ICategoryService _service;
+        private readonly IProductService _service;
 
-        public CategoriesController(ICategoryService service) => _service = service;
+        public ProductsController(IProductService service) => _service = service;
 
         [HttpGet]
-        [ProducesResponseType(typeof(List<CategoryViewModel>), 200)]
+        [ProducesResponseType(typeof(List<ProductViewModel>), 200)]
         [ProducesResponseType(typeof(ErrorViewModel), 500)]
-        public async Task<ActionResult<List<CategoryViewModel>>> Get() => CustomResponse(await _service.GetCategoriesAsync());
+        public async Task<ActionResult<List<ProductViewModel>>> Get() => CustomResponse(await _service.GetProductsAsync());
 
         [HttpGet]
         [Route("{id:long}")]
-        [ProducesResponseType(typeof(CategoryViewModel), 200)]
+        [ProducesResponseType(typeof(ProductViewModel), 200)]
         [ProducesResponseType(typeof(ErrorViewModel), 404)]
         [ProducesResponseType(typeof(ErrorViewModel), 500)]
-        public async Task<ActionResult<CategoryViewModel>> Get(long id) => CustomResponse(await _service.GetCategoryByIdAsync(id));
+        public async Task<ActionResult<ProductViewModel>> Get(long id) => CustomResponse(await _service.GetProductByIdAsync(id));
 
         [HttpPost]
-        [ProducesResponseType(typeof(CategoryViewModel), 200)]
+        [ProducesResponseType(200)]
         [ProducesResponseType(typeof(ErrorViewModel), 400)]
         [ProducesResponseType(typeof(ErrorViewModel), 500)]
-        public async Task<ActionResult> Post(CategoryViewModel viewModel) => CustomResponse(await _service.InsertCategoryAsync(viewModel));
+        public async Task<ActionResult> Post(ProductViewModel viewModel) => CustomResponse(await _service.InsertProductAsync(viewModel));
 
         [HttpPut]
         [Route("{id:long}")]
@@ -39,19 +39,19 @@ namespace Dell.Academy.Api.Controllers
         [ProducesResponseType(typeof(ErrorViewModel), 400)]
         [ProducesResponseType(typeof(ErrorViewModel), 404)]
         [ProducesResponseType(typeof(ErrorViewModel), 500)]
-        public async Task<ActionResult> Put(CategoryViewModel viewModel, long id)
+        public async Task<ActionResult> Put(ProductViewModel viewModel, long id)
         {
             if (id != viewModel.Id)
                 return BadRequest(ErrorMessages.IdDoNotMatch);
 
-            return CustomResponse(await _service.UpdateCategoryAsync(viewModel));
+            return CustomResponse(await _service.UpdateProductAsync(viewModel));
         }
 
         [HttpDelete]
         [Route("{id:long}")]
-        [ProducesResponseType(typeof(CategoryViewModel), 200)]
+        [ProducesResponseType(200)]
         [ProducesResponseType(typeof(ErrorViewModel), 404)]
         [ProducesResponseType(typeof(ErrorViewModel), 500)]
-        public async Task<ActionResult> Delete(long id) => CustomResponse(await _service.DeleteCategoryAsync(id));
+        public async Task<ActionResult> Delete(long id) => CustomResponse(await _service.DeleteProductAsync(id));
     }
 }
