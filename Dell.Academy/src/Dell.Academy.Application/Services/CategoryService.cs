@@ -6,6 +6,7 @@ using Dell.Academy.Domain.Extensions;
 using Dell.Academy.Domain.Interfaces;
 using Dell.Academy.Domain.Models;
 using Dell.Academy.Domain.Models.Validations;
+using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
 using System.Net;
 using System.Threading.Tasks;
@@ -34,8 +35,9 @@ namespace Dell.Academy.Application.Services
 
         public async Task<OperationResult> GetCategoriesAsync()
         {
-            var categories = await _repository.GetAllAsync();
-            return Success(_mapper.Map<List<CategoryViewModel>>(categories));
+            throw new System.Exception("Exceção particular");
+            //var categories = await _repository.GetAllAsync();
+            //return Success(_mapper.Map<List<CategoryViewModel>>(categories));
         }
 
         public async Task<OperationResult> InsertCategoryAsync(CategoryViewModel viewModel)
@@ -66,11 +68,18 @@ namespace Dell.Academy.Application.Services
 
         public async Task<OperationResult> DeleteCategoryAsync(long id)
         {
-            var category = await _repository.GetByIdAsync(id);
-            if (category is null)
-                return Error(ErrorMessages.NotFoundError("Categoria", id), HttpStatusCode.NotFound);
+            try
+            {
+                var category = await _repository.GetByIdAsync(id);
+                if (category is null)
+                    return Error(ErrorMessages.NotFoundError("Categoria", id), HttpStatusCode.NotFound);
 
-            return Commit(await _repository.DeleteAsync(id));
+                return Commit(await _repository.DeleteAsync(id));
+            }
+            catch (DbUpdateException)
+            {
+                return Error(ErrorMessages.IntegrityReferenceError("Categoria"));
+            }
         }
     }
 }
