@@ -28,7 +28,7 @@ namespace Dell.Academy.Api.Controllers
         public async Task<ActionResult<ProviderViewModel>> Get(long id) => CustomResponse(await _service.GetProviderByIdAsync(id));
 
         [HttpPost]
-        [ProducesResponseType(typeof(ProviderViewModel), 200)]
+        [ProducesResponseType(200)]
         [ProducesResponseType(typeof(ErrorViewModel), 400)]
         [ProducesResponseType(typeof(ErrorViewModel), 500)]
         public async Task<ActionResult> Post(ProviderViewModel viewModel) => CustomResponse(await _service.InsertProviderAsync(viewModel));
@@ -64,6 +64,7 @@ namespace Dell.Academy.Api.Controllers
         [HttpDelete]
         [Route("{id:long}")]
         [ProducesResponseType(200)]
+        [ProducesResponseType(typeof(ErrorViewModel), 400)]
         [ProducesResponseType(typeof(ErrorViewModel), 404)]
         [ProducesResponseType(typeof(ErrorViewModel), 500)]
         public async Task<ActionResult> Delete(long id) => CustomResponse(await _service.DeleteProviderAsync(id));

@@ -6,7 +6,6 @@ using Dell.Academy.Domain.Extensions;
 using Dell.Academy.Domain.Interfaces;
 using Dell.Academy.Domain.Models;
 using Dell.Academy.Domain.Models.Validations;
-using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
 using System.Net;
 using System.Threading.Tasks;
@@ -84,18 +83,11 @@ namespace Dell.Academy.Application.Services
 
         public async Task<OperationResult> DeleteProviderAsync(long id)
         {
-            try
-            {
-                var provider = await _providerRepository.GetByIdAsync(id);
-                if (provider is null)
-                    return Error(ErrorMessages.NotFoundError("Fornecedor", id), HttpStatusCode.NotFound);
+            var provider = await _providerRepository.GetByIdAsync(id);
+            if (provider is null)
+                return Error(ErrorMessages.NotFoundError("Fornecedor", id), HttpStatusCode.NotFound);
 
-                return Commit(await _providerRepository.DeleteAsync(id));
-            }
-            catch (DbUpdateException)
-            {
-                return Error(ErrorMessages.IntegrityReferenceError("Fornecedor"));
-            }
+            return Commit(await _providerRepository.DeleteAsync(id));
         }
 
         private async Task<bool> ProviderWithDocumentNumberExistsAsync(string documentNumber)

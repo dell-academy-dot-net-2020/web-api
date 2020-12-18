@@ -11,6 +11,8 @@ namespace Dell.Academy.Domain.Models.Validations
 
             RuleFor(pd => pd.Description).NotEmpty().Length(3, 30).OverridePropertyName("Descrição");
 
+            RuleFor(pd => pd.Sku).NotEmpty().Length(6);
+
             RuleFor(pd => pd.Value).NotEmpty().GreaterThan(0).OverridePropertyName("Valor");
 
             RuleFor(pd => pd.Register).LessThanOrEqualTo(DateTime.UtcNow).OverridePropertyName("Resgitros");

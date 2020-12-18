@@ -11,6 +11,8 @@
         public static string CnpjSizeError => "O campo Cnpj precisa ter 14 caracteres";
         public static string CnpjInvalidError => "O Cnpj fornecido não é válido";
 
+        public static string InternalServerError(string exceptionMessage) => $"Houve um erro durante a requisição: {exceptionMessage}";
+
         public static string IntegrityReferenceError(string entityType) => $"Não foi possível exluir: {entityType} possui produtos cadastrados";
 
         public static string ProviderExistsError(string documentNumber) => $"Fornecedor com o documento {documentNumber} já está cadastrado";
