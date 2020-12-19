@@ -6,7 +6,7 @@ namespace Dell.Academy.Domain.Models.Validations
     {
         public CategoryValidator()
         {
-            RuleFor(c => c.Name).NotEmpty().Length(3, 15);
+            RuleFor(c => c.Name).NotEmpty().Length(3, 15).OverridePropertyName("Nome");
         }
     }
 }

@@ -1,0 +1,9 @@
+export { default as NotFound } from "./NotFound";
+export { default as ProductsList } from "./Stock/Products/ProductsList";
+export { default as ProductsRegister } from "./Stock/Products/ProductsRegister";
+export { default as ProductDetail } from "./Stock/Products/ProductDetail";
+export { default as CategoriesList } from "./Stock/Categories/CategoriesList";
+export { default as CategoryDetail } from "./Stock/Categories/CategoryDetail";
+export { default as CategoriesRegister } from "./Stock/Categories/CategoriesRegister";
+export { default as ProvidersList } from "./Stock/Providers/ProvidersList";
+export { default as ProvidersRegister } from "./Stock/Providers/ProvidersRegister";

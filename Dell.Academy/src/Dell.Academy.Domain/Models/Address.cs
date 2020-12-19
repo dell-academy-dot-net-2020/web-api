@@ -2,6 +2,7 @@
 {
     public class Address : BaseEntity
     {
+      
         public string Street { get; private set; }
         public int Number { get; private set; }
         public string Complement { get; private set; }

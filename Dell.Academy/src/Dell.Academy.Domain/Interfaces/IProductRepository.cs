@@ -11,5 +11,7 @@ namespace Dell.Academy.Domain.Interfaces
         Task<List<Product>> GetProductsByProviderIdAsync(long providerId);
 
         Task<List<Product>> GetProductsWithCategoryAndProviderAsync();
+
+        Task<bool> ProductSkuExists(Product product);
     }
 }

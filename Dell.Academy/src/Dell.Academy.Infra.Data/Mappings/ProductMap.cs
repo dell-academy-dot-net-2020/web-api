@@ -14,6 +14,7 @@ namespace Dell.Academy.Infra.Data.Mappings
             builder.Property(c => c.Value).IsRequired();
             builder.Property(c => c.Register).IsRequired();
             builder.Property(c => c.Active);
+            builder.Property(c => c.Sku).IsRequired().HasMaxLength(6);
             builder.HasOne(c => c.Provider).WithMany(p => p.Products).HasForeignKey(c => c.ProviderId);
             builder.HasOne(c => c.Category).WithMany(p => p.Products).HasForeignKey(c => c.CategoryId);
             builder.ToTable("Products");

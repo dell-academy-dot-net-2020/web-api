@@ -110,6 +110,11 @@ namespace Dell.Academy.Infra.Data.Migrations
                     b.Property<DateTime>("Register")
                         .HasColumnType("datetime");
 
+                    b.Property<string>("Sku")
+                        .IsRequired()
+                        .HasColumnType("varchar(6)")
+                        .HasMaxLength(6);
+
                     b.Property<decimal>("Value")
                         .HasColumnType("decimal(18, 2)");
 
@@ -140,8 +145,8 @@ namespace Dell.Academy.Infra.Data.Migrations
                         .HasColumnType("varchar(15)")
                         .HasMaxLength(15);
 
-                    b.Property<int>("ProviderType")
-                        .HasColumnType("int");
+                    b.Property<short>("ProviderType")
+                        .HasColumnType("smallint");
 
                     b.HasKey("Id");
 

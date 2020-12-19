@@ -9,6 +9,7 @@ namespace Dell.Academy.Domain.Models
         public decimal Value { get; private set; }
         public DateTime Register { get; private set; }
         public bool Active { get; private set; }
+        public string Sku { get; private set; }
 
         public long ProviderId { get; private set; }
         public Provider Provider { get; private set; }
@@ -20,15 +21,17 @@ namespace Dell.Academy.Domain.Models
         {
         }
 
-        public Product(string name, string description, decimal value, DateTime register, bool active, long providerId, long categoryId)
+        public Product(string name, string description, decimal value, bool active, string sku, long providerId, long categoryId)
         {
             Name = name;
             Description = description;
             Value = value;
-            Register = register;
             Active = active;
+            Sku = sku;
             ProviderId = providerId;
             CategoryId = categoryId;
         }
+
+        public void SetProductRegister(DateTime dateRegister) => Register = dateRegister;
     }
 }

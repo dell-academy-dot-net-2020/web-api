@@ -6,19 +6,19 @@ namespace Dell.Academy.Domain.Models.Validations
     {
         public AddressValidator()
         {
-            RuleFor(a => a.Street).NotEmpty().Length(3, 15);
+            RuleFor(a => a.Street).NotEmpty().Length(3, 15).OverridePropertyName("Rua");
 
-            RuleFor(a => a.Number).GreaterThan(0);
+            RuleFor(a => a.Number).GreaterThan(0).OverridePropertyName("Número"); 
 
-            RuleFor(a => a.Complement).Length(3, 15);
+            RuleFor(a => a.Complement).Length(3, 15).OverridePropertyName("Complemento");
 
             RuleFor(a => a.Cep).NotEmpty().Length(8);
 
-            RuleFor(a => a.District).NotEmpty().Length(3, 15);
+            RuleFor(a => a.District).NotEmpty().Length(3, 15).OverridePropertyName("Bairro");
 
-            RuleFor(a => a.City).NotEmpty().Length(3, 15);
+            RuleFor(a => a.City).NotEmpty().Length(3, 15).OverridePropertyName("Cidade");
 
-            RuleFor(a => a.State).NotEmpty().Length(2);
+            RuleFor(a => a.State).NotEmpty().Length(2).OverridePropertyName("Estado");
         }
     }
 }

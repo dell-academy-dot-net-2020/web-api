@@ -1,5 +1,5 @@
 ﻿using FluentValidation;
-using Microsoft.VisualBasic;
+using System;
 
 namespace Dell.Academy.Domain.Models.Validations
 {
@@ -7,13 +7,15 @@ namespace Dell.Academy.Domain.Models.Validations
     {
         public ProductValidator()
         {
-            RuleFor(pd => pd.Name).NotEmpty().Length(3, 15);
+            RuleFor(pd => pd.Name).NotEmpty().Length(3, 15).OverridePropertyName("Nome");
 
-            RuleFor(pd => pd.Description).NotEmpty().Length(3, 30);
+            RuleFor(pd => pd.Description).NotEmpty().Length(3, 30).OverridePropertyName("Descrição");
 
-            RuleFor(pd => pd.Value).NotEmpty().GreaterThan(0);
+            RuleFor(pd => pd.Sku).NotEmpty().Length(6);
 
-            RuleFor(pd => pd.Register).Equal(DateAndTime.Now);
+            RuleFor(pd => pd.Value).NotEmpty().GreaterThan(0).OverridePropertyName("Valor");
+
+            RuleFor(pd => pd.Register).LessThanOrEqualTo(DateTime.UtcNow).OverridePropertyName("Resgitros");
         }
     }
 }

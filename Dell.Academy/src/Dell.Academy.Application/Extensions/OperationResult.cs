@@ -16,6 +16,8 @@ namespace Dell.Academy.Application.Extensions
             StatusCode = statusCode;
         }
 
+        public OperationResult(ValidationResult result) => Result = result;
+
         public OperationResult(object content) => Content = content;
     }
 }

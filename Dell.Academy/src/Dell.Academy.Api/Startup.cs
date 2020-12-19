@@ -49,6 +49,7 @@ namespace Dell.Academy.Api
             app.UseSwaggerSetup();
             app.UseRouting();
             app.UseAuthorization();
+            app.UseExceptionHadlerMiddleware();
 
             app.UseEndpoints(endpoints =>
             {

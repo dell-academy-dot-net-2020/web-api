@@ -15,7 +15,7 @@ namespace Dell.Academy.Api.Controllers
             if (!result.IsValid)
                 return ErrorResponse(result);
 
-            return Ok(result.Content);
+            return Ok(result.Content ?? string.Empty);
         }
 
         private ActionResult ErrorResponse(OperationResult result)
