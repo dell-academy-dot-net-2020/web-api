@@ -8,14 +8,6 @@ namespace Dell.Academy.Infra.CrossCutting.Seed
 {
     public static class EntitiesFixture
     {
-        public static List<Category> GetMockedCategories()
-        {
-            var faker = GetFaker<Category>();
-            var categories = faker.CustomInstantiator(f =>
-                new Category(f.Commerce.Categories(1)[0])).Generate(10);
-            return categories;
-        }
-
         public static List<Provider> GetMockedProviders()
         {
             var faker = GetFaker<Provider>();
@@ -26,7 +18,7 @@ namespace Dell.Academy.Infra.CrossCutting.Seed
                     ProviderType.Company,
                     f.Random.Bool(),
                     GetMockedAddress(),
-                    new List<Product>()
+                    GetMockProducts()
                 )).Generate(5);
 
             var personProviders = faker.CustomInstantiator(f =>
@@ -36,13 +28,38 @@ namespace Dell.Academy.Infra.CrossCutting.Seed
                     ProviderType.Person,
                     f.Random.Bool(),
                     GetMockedAddress(),
-                    new List<Product>()
+                    GetMockProducts()
                 )).Generate(5);
 
             var providers = new List<Provider>();
             providers.AddRange(companyProviders);
             providers.AddRange(personProviders);
             return providers;
+        }
+
+        private static List<Product> GetMockProducts()
+        {
+            var faker = GetFaker<Product>();
+            var products = faker.CustomInstantiator(f =>
+               new Product(
+                   f.Commerce.ProductName(),
+                   f.Commerce.ProductDescription(),
+                   decimal.Parse(f.Commerce.Price()),
+                   f.Random.Bool(),
+                   f.Commerce.Random.AlphaNumeric(6),
+                   0,
+                   0,
+                   GetMockedCategory()
+               )).Generate(5);
+            return products;
+        }
+
+        private static Category GetMockedCategory()
+        {
+            var faker = GetFaker<Category>();
+            var category = faker.CustomInstantiator(f =>
+                new Category(f.Commerce.Categories(1)[0]));
+            return category;
         }
 
         private static Faker<TEntity> GetFaker<TEntity>() where TEntity : BaseEntity

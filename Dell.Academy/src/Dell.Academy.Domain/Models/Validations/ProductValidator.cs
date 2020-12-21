@@ -7,9 +7,9 @@ namespace Dell.Academy.Domain.Models.Validations
     {
         public ProductValidator()
         {
-            RuleFor(pd => pd.Name).NotEmpty().Length(3, 15).OverridePropertyName("Nome");
+            RuleFor(pd => pd.Name).NotEmpty().Length(3, 30).OverridePropertyName("Nome");
 
-            RuleFor(pd => pd.Description).NotEmpty().Length(3, 30).OverridePropertyName("Descrição");
+            RuleFor(pd => pd.Description).NotEmpty().Length(3, 50).OverridePropertyName("Descrição");
 
             RuleFor(pd => pd.Sku).NotEmpty().Length(6);
 

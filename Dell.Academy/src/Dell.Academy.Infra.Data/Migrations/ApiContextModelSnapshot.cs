@@ -30,8 +30,8 @@ namespace Dell.Academy.Infra.Data.Migrations
 
                     b.Property<string>("City")
                         .IsRequired()
-                        .HasColumnType("varchar(15)")
-                        .HasMaxLength(15);
+                        .HasColumnType("varchar(30)")
+                        .HasMaxLength(30);
 
                     b.Property<string>("Complement")
                         .HasColumnType("varchar(15)")
@@ -39,8 +39,8 @@ namespace Dell.Academy.Infra.Data.Migrations
 
                     b.Property<string>("District")
                         .IsRequired()
-                        .HasColumnType("varchar(15)")
-                        .HasMaxLength(15);
+                        .HasColumnType("varchar(30)")
+                        .HasMaxLength(30);
 
                     b.Property<int>("Number")
                         .HasColumnType("int")
@@ -56,8 +56,8 @@ namespace Dell.Academy.Infra.Data.Migrations
 
                     b.Property<string>("Street")
                         .IsRequired()
-                        .HasColumnType("varchar(15)")
-                        .HasMaxLength(15);
+                        .HasColumnType("varchar(30)")
+                        .HasMaxLength(30);
 
                     b.HasKey("Id");
 
@@ -75,8 +75,8 @@ namespace Dell.Academy.Infra.Data.Migrations
 
                     b.Property<string>("Name")
                         .IsRequired()
-                        .HasColumnType("varchar(15)")
-                        .HasMaxLength(15);
+                        .HasColumnType("varchar(50)")
+                        .HasMaxLength(50);
 
                     b.HasKey("Id");
 
@@ -96,13 +96,13 @@ namespace Dell.Academy.Infra.Data.Migrations
                         .HasColumnType("bigint");
 
                     b.Property<string>("Description")
-                        .HasColumnType("varchar(30)")
-                        .HasMaxLength(30);
+                        .HasColumnType("varchar(200)")
+                        .HasMaxLength(200);
 
                     b.Property<string>("Name")
                         .IsRequired()
-                        .HasColumnType("varchar(15)")
-                        .HasMaxLength(15);
+                        .HasColumnType("varchar(50)")
+                        .HasMaxLength(50);
 
                     b.Property<long>("ProviderId")
                         .HasColumnType("bigint");
@@ -142,8 +142,8 @@ namespace Dell.Academy.Infra.Data.Migrations
 
                     b.Property<string>("Name")
                         .IsRequired()
-                        .HasColumnType("varchar(15)")
-                        .HasMaxLength(15);
+                        .HasColumnType("varchar(50)")
+                        .HasMaxLength(50);
 
                     b.Property<short>("ProviderType")
                         .HasColumnType("smallint");

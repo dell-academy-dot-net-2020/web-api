@@ -32,6 +32,18 @@ namespace Dell.Academy.Domain.Models
             CategoryId = categoryId;
         }
 
+        public Product(string name, string description, decimal value, bool active, string sku, long providerId, long categoryId, Category category)
+        {
+            Name = name;
+            Description = description;
+            Value = value;
+            Active = active;
+            Sku = sku;
+            ProviderId = providerId;
+            CategoryId = categoryId;
+            Category = category;
+        }
+
         public void SetProductRegister(DateTime dateRegister) => Register = dateRegister;
     }
 }

@@ -1,5 +1,6 @@
 using Dell.Academy.Api.Configurations;
 using Dell.Academy.Infra.CrossCutting.IoC;
+using Dell.Academy.Infra.CrossCutting.Seed;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
@@ -39,9 +40,13 @@ namespace Dell.Academy.Api
             services.AddCors(opt => opt.AddDefaultPolicy(p => p.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader()));
         }
 
-        public static void Configure(IApplicationBuilder app, IWebHostEnvironment env)
+        public static void Configure(IApplicationBuilder app, IWebHostEnvironment env, ISeedService service)
         {
-            if (env.IsDevelopment()) app.UseDeveloperExceptionPage();
+            if (env.IsDevelopment())
+            {
+                app.UseDeveloperExceptionPage();
+                service.Seed();
+            }
 
             app.UseCors();
             app.UseHttpsRedirection();

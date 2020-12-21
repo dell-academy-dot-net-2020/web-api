@@ -14,6 +14,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Dell.Academy.Domain\Dell.Academy.Domain.csproj" />
+    <ProjectReference Include="..\Dell.Academy.Infra.Data\Dell.Academy.Infra.Data.csproj" />
   </ItemGroup>
 
 </Project>

@@ -9,7 +9,7 @@ namespace Dell.Academy.Infra.Data.Mappings
         public void Configure(EntityTypeBuilder<Provider> builder)
         {
             builder.HasKey(c => c.Id);
-            builder.Property(c => c.Name).IsRequired().HasMaxLength(15);
+            builder.Property(c => c.Name).IsRequired().HasMaxLength(50);
             builder.Property(c => c.DocumentNumber).HasMaxLength(14);
             builder.Property(c => c.ProviderType).IsRequired();
             builder.Property(c => c.Active);
