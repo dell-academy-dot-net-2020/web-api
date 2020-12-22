@@ -18,8 +18,8 @@ namespace Dell.Academy.Infra.CrossCutting.Seed
                     ProviderType.Company,
                     f.Random.Bool(),
                     GetMockedAddress(),
-                    GetMockProducts()
-                )).Generate(5);
+                    GetMockProducts(GetMockedCategory())
+                )).Generate(2);
 
             var personProviders = faker.CustomInstantiator(f =>
                 new Provider(
@@ -28,16 +28,17 @@ namespace Dell.Academy.Infra.CrossCutting.Seed
                     ProviderType.Person,
                     f.Random.Bool(),
                     GetMockedAddress(),
-                    GetMockProducts()
-                )).Generate(5);
+                    GetMockProducts(GetMockedCategory())
+                )).Generate(3);
 
             var providers = new List<Provider>();
             providers.AddRange(companyProviders);
             providers.AddRange(personProviders);
+
             return providers;
         }
 
-        private static List<Product> GetMockProducts()
+        private static List<Product> GetMockProducts(Category category)
         {
             var faker = GetFaker<Product>();
             var products = faker.CustomInstantiator(f =>
@@ -49,8 +50,9 @@ namespace Dell.Academy.Infra.CrossCutting.Seed
                    f.Commerce.Random.AlphaNumeric(6),
                    0,
                    0,
-                   GetMockedCategory()
+                   category
                )).Generate(5);
+
             return products;
         }
 
@@ -58,7 +60,10 @@ namespace Dell.Academy.Infra.CrossCutting.Seed
         {
             var faker = GetFaker<Category>();
             var category = faker.CustomInstantiator(f =>
-                new Category(f.Commerce.Categories(1)[0]));
+                new Category(
+                    f.Commerce.Categories(1)[0]
+                )).Generate();
+
             return category;
         }
 
@@ -78,6 +83,7 @@ namespace Dell.Academy.Infra.CrossCutting.Seed
                     f.Address.City(),
                     f.Address.StateAbbr()
                 ));
+
             return address;
         }
     }

@@ -80,6 +80,9 @@ namespace Dell.Academy.Infra.Data.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("Name")
+                        .IsUnique();
+
                     b.ToTable("Categories");
                 });
 
@@ -149,6 +152,9 @@ namespace Dell.Academy.Infra.Data.Migrations
                         .HasColumnType("smallint");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("DocumentNumber")
+                        .IsUnique();
 
                     b.ToTable("Providers");
                 });

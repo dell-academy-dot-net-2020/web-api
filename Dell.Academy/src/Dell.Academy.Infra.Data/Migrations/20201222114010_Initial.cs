@@ -102,6 +102,12 @@ namespace Dell.Academy.Infra.Data.Migrations
                 unique: true);
 
             migrationBuilder.CreateIndex(
+                name: "IX_Categories_Name",
+                table: "Categories",
+                column: "Name",
+                unique: true);
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Products_CategoryId",
                 table: "Products",
                 column: "CategoryId");
@@ -110,6 +116,12 @@ namespace Dell.Academy.Infra.Data.Migrations
                 name: "IX_Products_ProviderId",
                 table: "Products",
                 column: "ProviderId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Providers_DocumentNumber",
+                table: "Providers",
+                column: "DocumentNumber",
+                unique: true);
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)

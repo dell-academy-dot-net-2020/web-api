@@ -9,7 +9,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Dell.Academy.Infra.Data.Migrations
 {
     [DbContext(typeof(ApiContext))]
-    [Migration("20201221123352_Initial")]
+    [Migration("20201222114010_Initial")]
     partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -82,6 +82,9 @@ namespace Dell.Academy.Infra.Data.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("Name")
+                        .IsUnique();
+
                     b.ToTable("Categories");
                 });
 
@@ -151,6 +154,9 @@ namespace Dell.Academy.Infra.Data.Migrations
                         .HasColumnType("smallint");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("DocumentNumber")
+                        .IsUnique();
 
                     b.ToTable("Providers");
                 });
