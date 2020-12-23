@@ -1,6 +1,7 @@
 ﻿using Dell.Academy.Application.Interfaces;
 using Dell.Academy.Application.Services;
 using Dell.Academy.Domain.Interfaces;
+using Dell.Academy.Infra.CrossCutting.Seed;
 using Dell.Academy.Infra.Data.Repository;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -29,6 +30,7 @@ namespace Dell.Academy.Infra.CrossCutting.IoC
             services.AddScoped<IProviderRepository, ProviderRepository>();
 
             // Infra - Seed Data
+            services.AddTransient<ISeedService, SeedService>();
         }
     }
 }

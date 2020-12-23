@@ -14,7 +14,7 @@ namespace Dell.Academy.Infra.Data.Migrations
                 {
                     Id = table.Column<long>(nullable: false)
                         .Annotation("MySQL:ValueGenerationStrategy", MySQLValueGenerationStrategy.IdentityColumn),
-                    Name = table.Column<string>(maxLength: 15, nullable: false)
+                    Name = table.Column<string>(maxLength: 50, nullable: false)
                 },
                 constraints: table =>
                 {
@@ -27,9 +27,9 @@ namespace Dell.Academy.Infra.Data.Migrations
                 {
                     Id = table.Column<long>(nullable: false)
                         .Annotation("MySQL:ValueGenerationStrategy", MySQLValueGenerationStrategy.IdentityColumn),
-                    Name = table.Column<string>(maxLength: 15, nullable: false),
+                    Name = table.Column<string>(maxLength: 50, nullable: false),
                     DocumentNumber = table.Column<string>(maxLength: 14, nullable: true),
-                    ProviderType = table.Column<int>(nullable: false),
+                    ProviderType = table.Column<short>(nullable: false),
                     Active = table.Column<bool>(nullable: false)
                 },
                 constraints: table =>
@@ -43,12 +43,12 @@ namespace Dell.Academy.Infra.Data.Migrations
                 {
                     Id = table.Column<long>(nullable: false)
                         .Annotation("MySQL:ValueGenerationStrategy", MySQLValueGenerationStrategy.IdentityColumn),
-                    Street = table.Column<string>(maxLength: 15, nullable: false),
+                    Street = table.Column<string>(maxLength: 30, nullable: false),
                     Number = table.Column<int>(maxLength: 6, nullable: false),
                     Complement = table.Column<string>(maxLength: 15, nullable: true),
                     Cep = table.Column<string>(maxLength: 8, nullable: false),
-                    District = table.Column<string>(maxLength: 15, nullable: false),
-                    City = table.Column<string>(maxLength: 15, nullable: false),
+                    District = table.Column<string>(maxLength: 30, nullable: false),
+                    City = table.Column<string>(maxLength: 30, nullable: false),
                     State = table.Column<string>(maxLength: 2, nullable: false),
                     ProviderId = table.Column<long>(nullable: false)
                 },
@@ -69,11 +69,12 @@ namespace Dell.Academy.Infra.Data.Migrations
                 {
                     Id = table.Column<long>(nullable: false)
                         .Annotation("MySQL:ValueGenerationStrategy", MySQLValueGenerationStrategy.IdentityColumn),
-                    Name = table.Column<string>(maxLength: 15, nullable: false),
-                    Description = table.Column<string>(maxLength: 30, nullable: true),
+                    Name = table.Column<string>(maxLength: 50, nullable: false),
+                    Description = table.Column<string>(maxLength: 200, nullable: true),
                     Value = table.Column<decimal>(nullable: false),
                     Register = table.Column<DateTime>(nullable: false),
                     Active = table.Column<bool>(nullable: false),
+                    Sku = table.Column<string>(maxLength: 6, nullable: false),
                     ProviderId = table.Column<long>(nullable: false),
                     CategoryId = table.Column<long>(nullable: false)
                 },
@@ -101,6 +102,12 @@ namespace Dell.Academy.Infra.Data.Migrations
                 unique: true);
 
             migrationBuilder.CreateIndex(
+                name: "IX_Categories_Name",
+                table: "Categories",
+                column: "Name",
+                unique: true);
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Products_CategoryId",
                 table: "Products",
                 column: "CategoryId");
@@ -109,6 +116,12 @@ namespace Dell.Academy.Infra.Data.Migrations
                 name: "IX_Products_ProviderId",
                 table: "Products",
                 column: "ProviderId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Providers_DocumentNumber",
+                table: "Providers",
+                column: "DocumentNumber",
+                unique: true);
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)

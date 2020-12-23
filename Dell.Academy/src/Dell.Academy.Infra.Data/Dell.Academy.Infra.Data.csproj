@@ -25,4 +25,8 @@
   <ItemGroup>
     <ProjectReference Include="..\Dell.Academy.Domain\Dell.Academy.Domain.csproj" />
   </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Migrations\" />
+  </ItemGroup>
 </Project>

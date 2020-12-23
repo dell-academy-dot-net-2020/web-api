@@ -9,8 +9,8 @@ namespace Dell.Academy.Domain.Models.Validations
     {
         public ProviderValidator()
         {
-            RuleFor(p => p.Name).NotEmpty().Length(3, 15).OverridePropertyName("Nome");
-        
+            RuleFor(p => p.Name).NotEmpty().Length(3, 30).OverridePropertyName("Nome");
+
             When(p => p.ProviderType == ProviderType.Person, () =>
             {
                 RuleFor(p => p.DocumentNumber.Length == CpfValidation.CpfSize).Equal(true).WithMessage(ErrorMessages.CpfSizeError);

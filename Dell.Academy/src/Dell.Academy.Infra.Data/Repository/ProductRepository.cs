@@ -21,7 +21,7 @@ namespace Dell.Academy.Infra.Data.Repository
             => await DbSet.AsNoTracking().Where(p => p.ProviderId == providerId).ToListAsync();
 
         public async Task<List<Product>> GetProductsWithCategoryAndProviderAsync()
-            => await DbSet.AsNoTracking().Include(p => p.Category).Include(p => p.Provider).ToListAsync();
+            => await DbSet.AsNoTracking().Include(p => p.Category).Include(p => p.Provider).OrderBy(x => x.Name).ToListAsync();
 
         public async Task<bool> ProductSkuExists(Product product) => await DbSet.AsNoTracking().AnyAsync(p => p.Sku == product.Sku && p.Id != product.Id);
     }

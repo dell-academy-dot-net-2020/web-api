@@ -1,8 +1,9 @@
-﻿namespace Dell.Academy.Domain.Models
+﻿using Dell.Academy.Domain.Models.Validations.Utils;
+
+namespace Dell.Academy.Domain.Models
 {
     public class Address : BaseEntity
     {
-      
         public string Street { get; private set; }
         public int Number { get; private set; }
         public string Complement { get; private set; }
@@ -23,7 +24,7 @@
             Street = street;
             Number = number;
             Complement = complement;
-            Cep = cep;
+            Cep = Utils.OnlyNumbers(cep);
             District = district;
             City = city;
             State = state;

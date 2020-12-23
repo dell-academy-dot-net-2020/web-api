@@ -9,8 +9,8 @@ namespace Dell.Academy.Infra.Data.Mappings
         public void Configure(EntityTypeBuilder<Product> builder)
         {
             builder.HasKey(c => c.Id);
-            builder.Property(c => c.Name).IsRequired().HasMaxLength(15);
-            builder.Property(c => c.Description).HasMaxLength(30);
+            builder.Property(c => c.Name).IsRequired().HasMaxLength(50);
+            builder.Property(c => c.Description).HasMaxLength(200);
             builder.Property(c => c.Value).IsRequired();
             builder.Property(c => c.Register).IsRequired();
             builder.Property(c => c.Active);
