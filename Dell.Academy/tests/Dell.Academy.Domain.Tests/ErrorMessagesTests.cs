@@ -18,5 +18,19 @@ namespace Dell.Academy.Domain.Tests
             // Assert
             Assert.Equal(errorMessage, result);
         }
+
+        [Fact]
+        public void InternalServerError_ReceiveAnExceptionMessage_ShouldReturnAnInternalServerErrorMessage()
+        {
+            // Arrange
+            var exceptionMessage = "Exception message test";
+            var errorMessage = $"Houve um erro durante a requisição: {exceptionMessage}";
+
+            // Act
+            var result = ErrorMessages.InternalServerError(exceptionMessage);
+
+            // Assert
+            Assert.Equal(errorMessage, result);
+        }
     }
 }
