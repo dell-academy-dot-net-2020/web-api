@@ -10,7 +10,7 @@ namespace Dell.Academy.Domain.Tests
         public void DatabaseCommitError_ShouldReturnTheCommitErrorMessage()
         {
             // Arrange
-            var errorMessage = "Não foi possível salvar o registro no banco de dados.";
+            var errorMessage = "Não foi possível salvar o registro no banco de dados";
 
             // Act
             var result = ErrorMessages.DatabaseCommitError;
@@ -20,10 +20,10 @@ namespace Dell.Academy.Domain.Tests
         }
 
         [Fact]
-        public void CategoryNameExistsError_ShouldReturnTheCommitErrorMessage()
+        public void CategoryNameExistsError_ShouldReturnCategoryNameAlreadyExistsErrorMessage()
         {
             // Arrange
-            var errorMessage = "Categoria já cadastrada.";
+            var errorMessage = "Categoria já cadastrada";
 
             // Act
             var result = ErrorMessages.CategoryNameExistsError;
@@ -33,10 +33,10 @@ namespace Dell.Academy.Domain.Tests
         }
 
         [Fact]
-        public void ProductSkuExistsError_ShouldReturnTheCommitErrorMessage()
+        public void ProductSkuExistsError_ShouldReturnSkuExistsErrorMessage()
         {
             // Arrange
-            var errorMessage = "Sku do produto já cadastrado.";
+            var errorMessage = "Sku do produto já cadastrado";
 
             // Act
             var result = ErrorMessages.ProductSkuExistsError;
@@ -46,10 +46,10 @@ namespace Dell.Academy.Domain.Tests
         }
 
         [Fact]
-        public void IdDoNotMatch_ShouldReturnTheCommitErrorMessage()
+        public void IdDoNotMatch_ShouldReturnIdDoNotMatchErrorMessage()
         {
             // Arrange
-            var errorMessage = "Os Id's não correspondem.";
+            var errorMessage = "Os Id's não correspondem";
 
             // Act
             var result = ErrorMessages.IdDoNotMatch;
@@ -59,10 +59,10 @@ namespace Dell.Academy.Domain.Tests
         }
 
         [Fact]
-        public void CpfSizeError_ShouldReturnTheCommitErrorMessage()
+        public void CpfSizeError_ShouldReturnCpfSizeErrorMessage()
         {
             // Arrange
-            var errorMessage = "O campo Cpf precisa ter 11 caracteres.";
+            var errorMessage = "O campo Cpf precisa ter 11 caracteres";
 
             // Act
             var result = ErrorMessages.CpfSizeError;
@@ -72,10 +72,10 @@ namespace Dell.Academy.Domain.Tests
         }
 
         [Fact]
-        public void CpfInvalidError_ShouldReturnTheCommitErrorMessage()
+        public void CpfInvalidError_ShouldReturnInvalidCpfErrorMessage()
         {
             // Arrange
-            var errorMessage = "O Cpf fornecido não é válido.";
+            var errorMessage = "O Cpf fornecido não é válido";
 
             // Act
             var result = ErrorMessages.CpfInvalidError;
@@ -85,10 +85,10 @@ namespace Dell.Academy.Domain.Tests
         }
 
         [Fact]
-        public void CnpjSizeError_ShouldReturnTheCommitErrorMessage()
+        public void CnpjSizeError_ShouldReturnCnpjSizeErrorMessage()
         {
             // Arrange
-            var errorMessage = "O campo Cnpj precisa ter 14 caracteres.";
+            var errorMessage = "O campo Cnpj precisa ter 14 caracteres";
 
             // Act
             var result = ErrorMessages.CnpjSizeError;
@@ -98,10 +98,10 @@ namespace Dell.Academy.Domain.Tests
         }
 
         [Fact]
-        public void CnpjInvalidError_ShouldReturnTheCommitErrorMessage()
+        public void CnpjInvalidError_ShouldReturnInvalidCnpjErrorMessage()
         {
             // Arrange
-            var errorMessage = "O Cnpj fornecido não é válido.";
+            var errorMessage = "O Cnpj fornecido não é válido";
 
             // Act
             var result = ErrorMessages.CnpjInvalidError;
@@ -125,42 +125,43 @@ namespace Dell.Academy.Domain.Tests
         }
 
         [Fact]
-        public void ProviderExistsError_ReceiveAnExceptionMessage_ShouldReturnAnProviderExistsErrorMessage()
+        public void ProviderExistsError_ReceiveADocumentNumber_ShouldReturnAnProviderExistsErrorMessage()
         {
             // Arrange
-            var exceptionMessage = "Exception message test";
-            var errorMessage = $"Fornecedor com o documento {exceptionMessage}";
+            var documentNumber = "123.456.789-10";
+            var errorMessage = $"Fornecedor com o documento {documentNumber} já está cadastrado";
 
             // Act
-            var result = ErrorMessages.ProviderExistsError(exceptionMessage);
+            var result = ErrorMessages.ProviderExistsError(documentNumber);
 
             // Assert
             Assert.Equal(errorMessage, result);
         }
 
         [Fact]
-        public void IntegrityReferenceError_ReceiveAnExceptionMessage_ShouldReturnAnIntegrityReferenceErrorMessage()
+        public void IntegrityReferenceError_ReceiveAnEntityType_ShouldReturnAnIntegrityReferenceErrorMessage()
         {
             // Arrange
-            var exceptionMessage = "Exception message test";
-            var errorMessage = $"Não foi possível exluir: {exceptionMessage}";
+            var entityType = "EntityTest";
+            var errorMessage = $"Não foi possível exluir: {entityType} possui produtos cadastrados";
 
             // Act
-            var result = ErrorMessages.IntegrityReferenceError(exceptionMessage);
+            var result = ErrorMessages.IntegrityReferenceError(entityType);
 
             // Assert
             Assert.Equal(errorMessage, result);
         }
 
         [Fact]
-        public void NotFoundError_ReceiveAnExceptionMessage_ShouldReturnAnNotFoundErrorMessage()
+        public void NotFoundError_ReceiveAnEntityTypeAndId_ShouldReturnANotFoundErrorMessage()
         {
             // Arrange
-            var exceptionMessage = "Exception message test";
-            var errorMessage = $"não foi encontrado(a): {exceptionMessage}";
+            var entityType = "EntityTest";
+            var id = 1;
+            var errorMessage = $"{entityType} com o id {id} não foi encontrado(a)";
 
             // Act
-            var result = ErrorMessages.NotFoundError(exceptionMessage);
+            var result = ErrorMessages.NotFoundError(entityType, id);
 
             // Assert
             Assert.Equal(errorMessage, result);

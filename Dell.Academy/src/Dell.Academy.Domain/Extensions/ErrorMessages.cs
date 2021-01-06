@@ -2,7 +2,7 @@
 {
     public static class ErrorMessages
     {
-        public static string DatabaseCommitError => "Não foi possível salvar o registro no banco de dados.";
+        public static string DatabaseCommitError => "Não foi possível salvar o registro no banco de dados";
         public static string CategoryNameExistsError => "Categoria já cadastrada";
         public static string ProductSkuExistsError => "Sku do produto já cadastrado";
         public static string IdDoNotMatch => "Os Id's não correspondem";
