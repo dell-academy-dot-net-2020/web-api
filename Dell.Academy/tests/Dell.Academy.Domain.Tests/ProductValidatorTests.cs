@@ -20,18 +20,18 @@ namespace Dell.Academy.Domain.Tests
         /// <summary>
         /// //////////////////////////////////////////NAME////////////////////////////////////////////////////
         /// </summary>
-        //[Fact]
-        //public void ReceiveAValidProductName_ShouldValidateProduct()
-        //{
-        //    // Arrange
-        //    var product = new Product(_faker.Commerce.Categories(1).FirstOrDefault());
+        [Fact]
+        public void ReceiveAValidProductName_ShouldValidateProduct()
+        {
+            // Arrange
+            var product = new Product("Test Name", "Test Description", "Tests Sku", "Test Value", "Test Register", "Test ProviderId", "Test CategoryId");
 
-        //    // Act
-        //    var result = _validator.Validate(product);
+            // Act
+            var result = _validator.Validate(product);
 
-        //    // Assert
-        //    Assert.True(result.IsValid);
-        //}
+            // Assert
+            Assert.True(result.IsValid);
+        }
 
         //[Fact]
         //public void ReceiveAnEmptyProductName_ShouldValidateProduct()
