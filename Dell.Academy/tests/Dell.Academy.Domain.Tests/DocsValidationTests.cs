@@ -5,11 +5,12 @@ using Xunit;
 
 namespace Dell.Academy.Domain.Tests
 {
+    [Collection(nameof(DomainTestsCollection))]
     public class DocsValidationTests
     {
         private readonly Faker _faker;
 
-        public DocsValidationTests() => _faker = new Faker("pt_BR");
+        public DocsValidationTests(DomainFixture fixture) => _faker = fixture.Faker;
 
         [Fact]
         public void CpfValidation_ReceiveACpfNumberWithDiferentSize_ShouldReturnFalse()

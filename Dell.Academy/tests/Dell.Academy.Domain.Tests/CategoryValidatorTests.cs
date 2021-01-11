@@ -6,14 +6,15 @@ using Xunit;
 
 namespace Dell.Academy.Domain.Tests
 {
+    [Collection(nameof(DomainTestsCollection))]
     public class CategoryValidatorTests
     {
         private readonly Faker _faker;
         private readonly CategoryValidator _validator;
 
-        public CategoryValidatorTests()
+        public CategoryValidatorTests(DomainFixture fixture)
         {
-            _faker = new Faker("pt_BR");
+            _faker = fixture.Faker;
             _validator = new CategoryValidator();
         }
 

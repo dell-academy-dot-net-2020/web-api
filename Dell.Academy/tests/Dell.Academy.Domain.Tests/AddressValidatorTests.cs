@@ -6,14 +6,15 @@ using Xunit;
 
 namespace Dell.Academy.Domain.Tests
 {
+    [Collection(nameof(DomainTestsCollection))]
     public class AddressValidatorTests
     {
         private readonly Faker _faker;
         private readonly AddressValidator _validator;
 
-        public AddressValidatorTests()
+        public AddressValidatorTests(DomainFixture fixture)
         {
-            _faker = new Faker("pt_BR");
+            _faker = fixture.Faker;
             _validator = new AddressValidator();
         }
 

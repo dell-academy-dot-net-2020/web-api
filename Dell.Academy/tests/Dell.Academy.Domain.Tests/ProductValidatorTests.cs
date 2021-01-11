@@ -1,19 +1,21 @@
 ﻿using Bogus;
 using Dell.Academy.Domain.Models;
 using Dell.Academy.Domain.Models.Validations;
+using System;
 using System.Linq;
 using Xunit;
 
 namespace Dell.Academy.Domain.Tests
 {
+    [Collection(nameof(DomainTestsCollection))]
     public class ProductValidatorTests
     {
         private readonly Faker _faker;
         private readonly ProductValidator _validator;
 
-        public ProductValidatorTests()
+        public ProductValidatorTests(DomainFixture fixture)
         {
-            _faker = new Faker("pt_BR");
+            _faker = fixture.Faker;
             _validator = new ProductValidator();
         }
 
@@ -21,10 +23,10 @@ namespace Dell.Academy.Domain.Tests
         /// //////////////////////////////////////////NAME////////////////////////////////////////////////////
         /// </summary>
         [Fact]
-        public void ReceiveAValidProductName_ShouldValidateProduct()
+        public void ReceiveAValidProduct_ShouldValidateProduct()
         {
             // Arrange
-            var product = new Product("Test Name", "Test Description", "Tests Sku", "Test Value", "Test Register", "Test ProviderId", "Test CategoryId");
+            var product = new Product("Test Name", "Test Description", 100, true, "TestS1", 1, 1);
 
             // Act
             var result = _validator.Validate(product);
@@ -33,225 +35,188 @@ namespace Dell.Academy.Domain.Tests
             Assert.True(result.IsValid);
         }
 
-        //[Fact]
-        //public void ReceiveAnEmptyProductName_ShouldValidateProduct()
-        //{
-        //    // Arrange
-        //    var Product = new Product(string.Empty);
+        [Fact]
+        public void ReceiveAnEmptyProductName_ShouldValidateProduct()
+        {
+            // Arrange
+            var product = new Product(string.Empty, "Test Description", 100, true, "TestS1", 1, 1);
 
-        //    // Act
-        //    var result = _validator.Validate(Product);
+            // Act
+            var result = _validator.Validate(product);
 
-        //    // Assert
-        //    Assert.False(result.IsValid);
-        //    Assert.Equal("Nome", result.Errors.FirstOrDefault().PropertyName);
-        //}
+            // Assert
+            Assert.False(result.IsValid);
+            Assert.Equal("Nome", result.Errors.FirstOrDefault().PropertyName);
+        }
 
-        //[Fact]
-        //public void ReceiveASmallerSizeProductName_ShouldValidateProduct()
-        //{
-        //    // Arrange
-        //    var Product = new Product("C1");
+        [Fact]
+        public void ReceiveASmallerSizeProductName_ShouldValidateProduct()
+        {
+            // Arrange
+            var product = new Product("P1", "Test Description", 100, true, "TestS1", 1, 1);
 
-        //    // Act
-        //    var result = _validator.Validate(Product);
+            // Act
+            var result = _validator.Validate(product);
 
-        //    // Assert
-        //    Assert.False(result.IsValid);
-        //    Assert.Equal("Nome", result.Errors.FirstOrDefault().PropertyName);
-        //}
+            // Assert
+            Assert.False(result.IsValid);
+            Assert.Equal("Nome", result.Errors.FirstOrDefault().PropertyName);
+        }
 
-        //[Fact]
-        //public void ReceiveABiggerSizeProductName_ShouldValidateProduct()
-        //{
-        //    // Arrange
-        //    var Product = new Product(_faker.Random.AlphaNumeric(31));
+        [Fact]
+        public void ReceiveABiggerSizeProductName_ShouldValidateProduct()
+        {
+            // Arrange
+            var product = new Product(_faker.Random.AlphaNumeric(31), "Test Description", 100, true, "TestS1", 1, 1);
 
-        //    // Act
-        //    var result = _validator.Validate(Product);
+            // Act
+            var result = _validator.Validate(product);
 
-        //    // Assert
-        //    Assert.False(result.IsValid);
-        //    Assert.Equal("Nome", result.Errors.FirstOrDefault().PropertyName);
-        //}
+            // Assert
+            Assert.False(result.IsValid);
+            Assert.Equal("Nome", result.Errors.FirstOrDefault().PropertyName);
+        }
 
         ///// <summary>
         ///// //////////////////////////////////////////DESCRIPITION////////////////////////////////////////////////////
         ///// </summary>
-        //[Fact]
-        //public void ReceiveAValidProductDescription_ShouldValidateProduct()
-        //{
-        //    // Arrange
-        //    var product = new Product(_faker.Commerce.Categories(1).FirstOrDefault());
 
-        //    // Act
-        //    var result = _validator.Validate(product);
+        [Fact]
+        public void ReceiveAnEmptyProductDescription_ShouldValidateProduct()
+        {
+            // Arrange
+            var product = new Product("Test Name", string.Empty, 100, true, "TestS1", 1, 1);
 
-        //    // Assert
-        //    Assert.True(result.IsValid);
-        //}
+            // Act
+            var result = _validator.Validate(product);
 
-        //[Fact]
-        //public void ReceiveAnEmptyProductDescription_ShouldValidateProduct()
-        //{
-        //    // Arrange
-        //    var Product = new Product(string.Empty);
+            // Assert
+            Assert.False(result.IsValid);
+            Assert.Equal("Descrição", result.Errors.FirstOrDefault().PropertyName);
+        }
 
-        //    // Act
-        //    var result = _validator.Validate(Product);
+        [Fact]
+        public void ReceiveASmallerSizeProductDescription_ShouldValidateProduct()
+        {
+            // Arrange
+            var product = new Product("Test Name", "D1", 100, true, "TestS1", 1, 1);
 
-        //    // Assert
-        //    Assert.False(result.IsValid);
-        //    Assert.Equal("Descrição", result.Errors.FirstOrDefault().PropertyName);
-        //}
+            // Act
+            var result = _validator.Validate(product);
 
-        //[Fact]
-        //public void ReceiveASmallerSizeProductDescription_ShouldValidateProduct()
-        //{
-        //    // Arrange
-        //    var Product = new Product("C1");
+            // Assert
+            Assert.False(result.IsValid);
+            Assert.Equal("Descrição", result.Errors.FirstOrDefault().PropertyName);
+        }
 
-        //    // Act
-        //    var result = _validator.Validate(Product);
+        [Fact]
+        public void ReceiveABiggerSizeProductDescription_ShouldValidateProduct()
+        {
+            // Arrange
+            var product = new Product("Test Name", _faker.Random.AlphaNumeric(51), 100, true, "TestS1", 1, 1);
 
-        //    // Assert
-        //    Assert.False(result.IsValid);
-        //    Assert.Equal("Descrição", result.Errors.FirstOrDefault().PropertyName);
-        //}
+            // Act
+            var result = _validator.Validate(product);
 
-        //[Fact]
-        //public void ReceiveABiggerSizeProductDescription_ShouldValidateProduct()
-        //{
-        //    // Arrange
-        //    var Product = new Product(_faker.Random.AlphaNumeric(51));
-
-        //    // Act
-        //    var result = _validator.Validate(Product);
-
-        //    // Assert
-        //    Assert.False(result.IsValid);
-        //    Assert.Equal("Descrição", result.Errors.FirstOrDefault().PropertyName);
-        //}
+            // Assert
+            Assert.False(result.IsValid);
+            Assert.Equal("Descrição", result.Errors.FirstOrDefault().PropertyName);
+        }
 
         ///// <summary>
         ///// //////////////////////////////////////////SKU////////////////////////////////////////////////////
         ///// </summary>
-        //[Fact]
-        //public void ReceiveAValidProductSku_ShouldValidateProduct()
-        //{
-        //    // Arrange
-        //    var product = new Product(_faker.Commerce.Categories(1).FirstOrDefault());
 
-        //    // Act
-        //    var result = _validator.Validate(product);
+        [Fact]
+        public void ReceiveAnEmptyProductSku_ShouldValidateProduct()
+        {
+            // Arrange
+            var product = new Product("Test Name", "Test Description", 100, true, string.Empty, 1, 1);
 
-        //    // Assert
-        //    Assert.True(result.IsValid);
-        //}
+            // Act
+            var result = _validator.Validate(product);
 
-        //[Fact]
-        //public void ReceiveAnEmptyProductSku_ShouldValidateProduct()
-        //{
-        //    // Arrange
-        //    var Product = new Product(string.Empty);
+            // Assert
+            Assert.False(result.IsValid);
+            Assert.Equal("Sku", result.Errors.FirstOrDefault().PropertyName);
+        }
 
-        //    // Act
-        //    var result = _validator.Validate(Product);
+        [Fact]
+        public void ReceiveASmallerSizeProductSku_ShouldValidateProduct()
+        {
+            // Arrange
+            var product = new Product("Test Name", "Test Description", 100, true, "P1", 1, 1);
 
-        //    // Assert
-        //    Assert.False(result.IsValid);
-        //    Assert.Equal("",result.Errors.FirstOrDefault().PropertyName);
-        //}
+            // Act
+            var result = _validator.Validate(product);
 
-        //[Fact]
-        //public void ReceiveASmallerSizeProductSku_ShouldValidateProduct()
-        //{
-        //    // Arrange
-        //    var Product = new Product("C1");
+            // Assert
+            Assert.False(result.IsValid);
+            Assert.Equal("Sku", result.Errors.FirstOrDefault().PropertyName);
+        }
 
-        //    // Act
-        //    var result = _validator.Validate(Product);
+        [Fact]
+        public void ReceiveABiggerSizeProductSku_ShouldValidateProduct()
+        {
+            // Arrange
+            var product = new Product("Test Name", "Test Description", 100, true, _faker.Random.AlphaNumeric(7), 1, 1);
 
-        //    // Assert
-        //    Assert.False(result.IsValid);
-        //    Assert.Equal("Descrição", result.Errors.FirstOrDefault().PropertyName);
-        //}
+            // Act
+            var result = _validator.Validate(product);
+
+            // Assert
+            Assert.False(result.IsValid);
+            Assert.Equal("Sku", result.Errors.FirstOrDefault().PropertyName);
+        }
 
         ///// <summary>
         ///// //////////////////////////////////////////VALUE////////////////////////////////////////////////////
         ///// </summary>
 
-        //[Fact]
-        //public void ReceiveAValidProductValue_ShouldValidateProduct()
-        //{
-        //    // Arrange
-        //    var product = new Product(_faker.Commerce.Categories(1).FirstOrDefault());
+        [Fact]
+        public void ReceiveAnEmptyProductValue_ShouldValidateProduct()
+        {
+            // Arrange
+            var product = new Product("Test Name", "Test Description", 0, true, "TestS1", 1, 1);
 
-        //    // Act
-        //    var result = _validator.Validate(product);
+            // Act
+            var result = _validator.Validate(product);
 
-        //    // Assert
-        //    Assert.True(result.IsValid);
-        //}
+            // Assert
+            Assert.False(result.IsValid);
+            Assert.Equal("Valor", result.Errors.FirstOrDefault().PropertyName);
+        }
 
-        //[Fact]
-        //public void ReceiveAnEmptyProductValue_ShouldValidateProduct()
-        //{
-        //    // Arrange
-        //    var Product = new Product(string.Empty);
+        [Fact]
+        public void ReceiveASmallerProductValue_ShouldValidateProduct()
+        {
+            // Arrange
+            var product = new Product("Test Name", "Test Description", -50, true, "TestS1", 1, 1);
 
-        //    // Act
-        //    var result = _validator.Validate(Product);
+            // Act
+            var result = _validator.Validate(product);
 
-        //    // Assert
-        //    Assert.False(result.IsValid);
-        //    Assert.Equal("Valor", result.Errors.FirstOrDefault().PropertyName);
-        //}
-
-        //[Fact]
-        //public void ReceiveASmallerSizeProductValue_ShouldValidateProduct()
-        //{
-        //    // Arrange
-        //    var Product = new Product("C1");
-
-        //    // Act
-        //    var result = _validator.Validate(Product);
-
-        //    // Assert
-        //    Assert.False(result.IsValid);
-        //    Assert.Equal("Valor", result.Errors.FirstOrDefault().PropertyName);
-        //}
+            // Assert
+            Assert.False(result.IsValid);
+            Assert.Equal("Valor", result.Errors.FirstOrDefault().PropertyName);
+        }
 
         ///// <summary>
         ///// //////////////////////////////////////////REGISTER////////////////////////////////////////////////////
         ///// </summary>
         /////
 
-        //[Fact]
-        //public void ReceiveAValidProductRegister_ShouldValidateProduct()
-        //{
-        //    // Arrange
-        //    var product = new Product(_faker.Commerce.Categories(1).FirstOrDefault());
+        [Fact]
+        public void ReceiveAProductWithoutProviderId_ShouldValidateProduct()
+        {
+            // Arrange
+            var product = new Product("Test Name", "Test Description", 100, true, "TestS1", 0, 1);
 
-        //    // Act
-        //    var result = _validator.Validate(product);
+            // Act
+            product.SetProductRegister(DateTime.Now.Date);
 
-        //    // Assert
-        //    Assert.True(result.IsValid);
-        //}
-
-        //[Fact]
-        //public void ReceiveABiggerSizeProductRegister_ShouldValidateProduct()
-        //{
-        //    // Arrange
-        //    var Product = new Product(_faker.Random.AlphaNumeric(31));
-
-        //    // Act
-        //    var result = _validator.Validate(Product);
-
-        //    // Assert
-        //    Assert.False(result.IsValid);
-        //    Assert.Equal("Registro", result.Errors.FirstOrDefault().PropertyName);
-        //}
+            // Assert
+            Assert.Equal(DateTime.Now.Date, product.Register);
+        }
     }
 }
