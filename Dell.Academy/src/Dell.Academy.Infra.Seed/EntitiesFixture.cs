@@ -70,7 +70,7 @@ namespace Dell.Academy.Infra.CrossCutting.Seed
         private static Faker<TEntity> GetFaker<TEntity>() where TEntity : BaseEntity
             => new Faker<TEntity>("pt_BR");
 
-        private static Address GetMockedAddress()
+        public static Address GetMockedAddress()
         {
             var faker = GetFaker<Address>();
             var address = faker.CustomInstantiator(f =>
